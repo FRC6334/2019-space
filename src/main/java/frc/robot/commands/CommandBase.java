@@ -9,6 +9,7 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.subsystems.DriveTrain;
+import frc.robot.subsystems.Vision;
 import frc.robot.OI;
 
 
@@ -16,12 +17,14 @@ public class CommandBase extends Command {
 
   public static OI oi;
   public static DriveTrain driveTrain;
+  public static Vision vision;
 
   // Init all subsystems
   public static void init() {
     System.out.println("CommandBase init");
     // Instantiate all subsystems
     driveTrain = new DriveTrain();
+    vision = new Vision();
 
     OI.init();
   }
