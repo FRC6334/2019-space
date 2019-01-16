@@ -30,14 +30,21 @@ public class RobotMap {
   public static final int auxillaryStick = 2; // Programmer/aux driver stick
 
   // Drivetrain motors. Look at the bot when the battery is closest to you and you shall see :)
-  public static final int leftMotor1 = 1;
-  public static final int leftMotor2 = 2;
-  public static final int rightMotor1 = 0; // temp, set to 3
-  public static final int rightMotor2 = 4;
-  public static final float speedLimiter = 1; // Out of 1.0, this value represents the max speed that the robot will go. 0.8, for example, means 80% max motor speed
+  public static final int leftMotor1 = 3;
+  public static final int leftMotor2 = 4;
+  public static final int rightMotor1 = 1; // temp, set to 3
+  public static final int rightMotor2 = 2;
+  public static final float speedLimiter = 0.33f; // Out of 1.0, this value represents the max speed that the robot will go. 0.8, for example, means 80% max motor speed
 
   public static class rightStick {
     public static final int cycleVisionMode = 6;
     public static final int cycleCamMode = 7;
+  }
+
+  public static class climber {
+    public static final int frontCylinders1 = 0; // These represent the ports that you put plug the doublesolenoid into.
+    public static final int frontCylinders2 = 1;
+    public static final int backCylinders1 = 3;
+    public static final int backCylinders2 = 4;
   }
 }
