@@ -7,11 +7,17 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.Joystick;
+import frc.robot.OI;
 
 public class ClimberDrive extends CommandBase {
+
+  Joystick rightStick;
+
   public ClimberDrive() {
     super("ClimberDrive");
     requires(climber);
+    rightStick = OI.getRightDriveStick();
   }
 
   // Called just before this Command runs the first time
@@ -22,6 +28,9 @@ public class ClimberDrive extends CommandBase {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
+    if (rightStick.getRawButtonPressed(3)) {
+      climber.togglePiston();
+    } 
   }
 
   // Make this return true when this Command no longer needs to run execute()

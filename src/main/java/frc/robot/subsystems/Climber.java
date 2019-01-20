@@ -8,9 +8,7 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
-import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.command.Subsystem;
-import frc.robot.OI;
 import frc.robot.RobotMap;
 import frc.robot.commands.ClimberDrive;
 
@@ -19,17 +17,21 @@ import frc.robot.commands.ClimberDrive;
  */
 public class Climber extends Subsystem {
 
-  DoubleSolenoid frontCylinders, backCylinders;
-  Joystick auxStick;
+  DoubleSolenoid pistonTest;
+  boolean extended = false;
 
   public Climber() {
     System.out.println("Climber subsystem init");
-    frontCylinders = new DoubleSolenoid(RobotMap.climber.frontCylinders1, RobotMap.climber.frontCylinders2);
-    auxStick = OI.getAuxStick();
+    pistonTest = new DoubleSolenoid(RobotMap.pcm.auxPcm, RobotMap.climber.frontRightCylinderOpen, RobotMap.climber.frontRightCylinderClose);
   }
   
-  public void toggleAllCylinders() {
-
+  public void togglePiston() {
+    if (extended) {
+      pistonTest.set(DoubleSolenoid.Value.kForward);
+    } else {
+      pistonTest.set(DoubleSolenoid.Value.kReverse);
+    }
+    extended = !extended;
   }
 
   @Override

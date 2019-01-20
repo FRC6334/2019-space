@@ -42,9 +42,14 @@ public class RobotMap {
   }
 
   public static class climber {
-    public static final int frontCylinders1 = 0; // These represent the ports that you put plug the doublesolenoid into.
-    public static final int frontCylinders2 = 1;
-    public static final int backCylinders1 = 3;
-    public static final int backCylinders2 = 4;
+    public static final int frontRightCylinderOpen = 0;
+    public static final int frontRightCylinderClose = 1;
   }
+
+  public static class pcm {
+    public static final int mainPcm = 1;
+    public static final int auxPcm = 3; // Phoenix Tuner set the aux pcm id to 3
+  }
+
+  public static final int compressor = pcm.mainPcm; // Compressor takes the main pcm id as an arg
 }

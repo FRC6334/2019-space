@@ -41,8 +41,8 @@ public class DriveTrain extends Subsystem {
     //rightMotor1.setNeutralMode(NeutralMode.Brake);
     //rightMotor2.setNeutralMode(NeutralMode.Brake);
 
-    // compressor = new Compressor(0);
-    // compressor.setClosedLoopControl(true);
+    compressor = new Compressor(RobotMap.compressor);
+    compressor.setClosedLoopControl(true);
 
     navx = new AHRS(SPI.Port.kMXP);
     navx.reset();
