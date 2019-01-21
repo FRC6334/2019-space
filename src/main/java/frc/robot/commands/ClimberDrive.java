@@ -28,9 +28,11 @@ public class ClimberDrive extends CommandBase {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    if (rightStick.getRawButtonPressed(3)) {
-      climber.togglePiston();
-    } 
+    if (rightStick.getRawButtonPressed(6)) climber.togglePiston(6);
+    if (rightStick.getRawButtonPressed(7)) climber.togglePiston(7);
+    if (rightStick.getRawButtonPressed(11)) climber.togglePiston(11);
+    if (rightStick.getRawButtonPressed(10)) climber.togglePiston(10);
+    if (rightStick.getRawButtonPressed(3)) climber.toggleAll();
   }
 
   // Make this return true when this Command no longer needs to run execute()

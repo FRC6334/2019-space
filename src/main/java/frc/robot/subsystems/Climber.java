@@ -7,6 +7,8 @@
 
 package frc.robot.subsystems;
 
+import java.util.HashMap;
+
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.RobotMap;
@@ -17,21 +19,75 @@ import frc.robot.commands.ClimberDrive;
  */
 public class Climber extends Subsystem {
 
-  DoubleSolenoid pistonTest;
-  boolean extended = false;
+  DoubleSolenoid rightFront, rightBack, leftFront, leftBack;
+  boolean rightFrontExtended, rightBackExtended, leftFrontExtended, leftBackExtended, gg = false;
 
   public Climber() {
     System.out.println("Climber subsystem init");
-    pistonTest = new DoubleSolenoid(RobotMap.pcm.auxPcm, RobotMap.climber.frontRightCylinderOpen, RobotMap.climber.frontRightCylinderClose);
+    rightFront = new DoubleSolenoid(RobotMap.pcm.mainPcm, RobotMap.climber.rightFrontExtend,
+        RobotMap.climber.rightFrontReverse);
+    rightBack = new DoubleSolenoid(RobotMap.pcm.mainPcm, RobotMap.climber.rightBackExtend,
+        RobotMap.climber.rightBackReverse);
+    leftFront = new DoubleSolenoid(RobotMap.pcm.mainPcm, RobotMap.climber.leftFrontExtend,
+        RobotMap.climber.leftFrontReverse);
+    leftBack = new DoubleSolenoid(RobotMap.pcm.mainPcm, RobotMap.climber.leftBackExtend,
+        RobotMap.climber.leftBackReverse);
+    rightFront.set(DoubleSolenoid.Value.kReverse);
   }
-  
-  public void togglePiston() {
-    if (extended) {
-      pistonTest.set(DoubleSolenoid.Value.kForward);
-    } else {
-      pistonTest.set(DoubleSolenoid.Value.kReverse);
+
+  public void togglePiston(int button) {
+    switch (button) {
+    case 6:
+      if (leftFrontExtended) {
+        leftFront.set(DoubleSolenoid.Value.kReverse);
+      } else {
+        leftFront.set(DoubleSolenoid.Value.kForward);
+      }
+      leftFrontExtended = !leftFrontExtended;
+      break;
+    case 7:
+      if (leftBackExtended) {
+        leftBack.set(DoubleSolenoid.Value.kReverse);
+      } else {
+        leftBack.set(DoubleSolenoid.Value.kForward);
+      }
+      leftBackExtended = !leftBackExtended;
+      break;
+    case 10:
+      if (rightBackExtended) {
+        rightBack.set(DoubleSolenoid.Value.kReverse);
+      } else {
+        rightBack.set(DoubleSolenoid.Value.kForward);
+      }
+      rightBackExtended = !rightBackExtended;
+      break;
+    case 11:
+      if (rightFrontExtended) {
+        rightFront.set(DoubleSolenoid.Value.kReverse);
+      } else {
+        rightFront.set(DoubleSolenoid.Value.kForward);
+      }
+      rightFrontExtended = !rightFrontExtended;
+      break;
+    default:
+      System.out.println("Piston toggler was fed an unhandled button! " + button);
+      break;
     }
-    extended = !extended;
+  }
+
+  public void toggleAll() {
+    if (gg) {
+      rightBack.set(DoubleSolenoid.Value.kReverse);
+      leftBack.set(DoubleSolenoid.Value.kReverse);
+      leftFront.set(DoubleSolenoid.Value.kReverse);
+      rightFront.set(DoubleSolenoid.Value.kReverse);
+    } else {
+      rightBack.set(DoubleSolenoid.Value.kForward);
+      leftBack.set(DoubleSolenoid.Value.kForward);
+      leftFront.set(DoubleSolenoid.Value.kForward);
+      rightFront.set(DoubleSolenoid.Value.kForward);
+    }
+    gg = !gg;
   }
 
   @Override
