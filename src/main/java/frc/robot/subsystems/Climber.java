@@ -32,7 +32,11 @@ public class Climber extends Subsystem {
         RobotMap.climber.leftFrontReverse);
     leftBack = new DoubleSolenoid(RobotMap.pcm.mainPcm, RobotMap.climber.leftBackExtend,
         RobotMap.climber.leftBackReverse);
-    rightFront.set(DoubleSolenoid.Value.kReverse);
+        
+    rightFront.set(DoubleSolenoid.Value.kOff);
+    rightBack.set(DoubleSolenoid.Value.kOff);
+    leftFront.set(DoubleSolenoid.Value.kOff);
+    leftBack.set(DoubleSolenoid.Value.kOff);
   }
 
   public void togglePiston(int button) {
