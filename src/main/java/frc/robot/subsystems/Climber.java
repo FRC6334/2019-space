@@ -7,9 +7,8 @@
 
 package frc.robot.subsystems;
 
-import java.util.HashMap;
-
 import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.PWMTalonSRX;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.RobotMap;
 import frc.robot.commands.ClimberDrive;
@@ -19,7 +18,11 @@ import frc.robot.commands.ClimberDrive;
  */
 public class Climber extends Subsystem {
 
+  DoubleSolenoid.Value FORWARD = DoubleSolenoid.Value.kForward;
+  DoubleSolenoid.Value REVERSE = DoubleSolenoid.Value.kReverse;
+  DoubleSolenoid.Value OFF = DoubleSolenoid.Value.kReverse;
   DoubleSolenoid rightFront, rightBack, leftFront, leftBack;
+  PWMTalonSRX backDriveLeft, backDriveRight;
   boolean rightFrontExtended, rightBackExtended, leftFrontExtended, leftBackExtended, gg = false;
 
   public Climber() {
@@ -32,44 +35,49 @@ public class Climber extends Subsystem {
         RobotMap.climber.leftFrontReverse);
     leftBack = new DoubleSolenoid(RobotMap.pcm.mainPcm, RobotMap.climber.leftBackExtend,
         RobotMap.climber.leftBackReverse);
-        
-    rightFront.set(DoubleSolenoid.Value.kOff);
-    rightBack.set(DoubleSolenoid.Value.kOff);
-    leftFront.set(DoubleSolenoid.Value.kOff);
-    leftBack.set(DoubleSolenoid.Value.kOff);
+
+        backDriveLeft = new PWMTalonSRX(0);
+        backDriveRight = new PWMTalonSRX(1);
+
+        backDriveRight.setInverted(true);
+
+    rightFront.set(REVERSE);
+    rightBack.set(REVERSE);
+    leftFront.set(REVERSE);
+    leftBack.set(REVERSE);
   }
 
   public void togglePiston(int button) {
     switch (button) {
     case 6:
       if (leftFrontExtended) {
-        leftFront.set(DoubleSolenoid.Value.kReverse);
+        leftFront.set(REVERSE);
       } else {
-        leftFront.set(DoubleSolenoid.Value.kForward);
+        leftFront.set(FORWARD);
       }
       leftFrontExtended = !leftFrontExtended;
       break;
     case 7:
       if (leftBackExtended) {
-        leftBack.set(DoubleSolenoid.Value.kReverse);
+        leftBack.set(REVERSE);
       } else {
-        leftBack.set(DoubleSolenoid.Value.kForward);
+        leftBack.set(FORWARD);
       }
       leftBackExtended = !leftBackExtended;
       break;
     case 10:
       if (rightBackExtended) {
-        rightBack.set(DoubleSolenoid.Value.kReverse);
+        rightBack.set(REVERSE);
       } else {
-        rightBack.set(DoubleSolenoid.Value.kForward);
+        rightBack.set(FORWARD);
       }
       rightBackExtended = !rightBackExtended;
       break;
     case 11:
       if (rightFrontExtended) {
-        rightFront.set(DoubleSolenoid.Value.kReverse);
+        rightFront.set(REVERSE);
       } else {
-        rightFront.set(DoubleSolenoid.Value.kForward);
+        rightFront.set(FORWARD);
       }
       rightFrontExtended = !rightFrontExtended;
       break;
@@ -79,19 +87,64 @@ public class Climber extends Subsystem {
     }
   }
 
+  boolean extended = true;
+  public void testR() {
+    if (extended) {
+      rightBack.set(REVERSE);
+    } else {
+      rightBack.set(FORWARD);
+    }
+    System.out.println(extended);
+    extended = !extended;
+  }
+
+  public void driveBack(double amnt) {
+    backDriveLeft.set(amnt);
+    backDriveRight.set(-amnt);
+  }
+
+  public void driveIndividual(double left, double right) {
+    backDriveLeft.set(left);
+    backDriveRight.set(right);
+  }
+
   public void toggleAll() {
     if (gg) {
-      rightBack.set(DoubleSolenoid.Value.kReverse);
-      leftBack.set(DoubleSolenoid.Value.kReverse);
-      leftFront.set(DoubleSolenoid.Value.kReverse);
-      rightFront.set(DoubleSolenoid.Value.kReverse);
+      rightBack.set(REVERSE);
+      leftBack.set(REVERSE);
+      leftFront.set(REVERSE);
+      rightFront.set(REVERSE);
     } else {
-      rightBack.set(DoubleSolenoid.Value.kForward);
-      leftBack.set(DoubleSolenoid.Value.kForward);
-      leftFront.set(DoubleSolenoid.Value.kForward);
-      rightFront.set(DoubleSolenoid.Value.kForward);
+      rightBack.set(FORWARD);
+      leftBack.set(FORWARD);
+      leftFront.set(FORWARD);
+      rightFront.set(FORWARD);
     }
     gg = !gg;
+  }
+
+  public void toggleBack() {
+    if (rightBackExtended && leftBackExtended) {
+      rightBack.set(REVERSE);
+      leftBack.set(REVERSE);
+    } else {
+      rightBack.set(FORWARD);
+      leftBack.set(FORWARD);
+    }
+    rightBackExtended = !rightBackExtended;
+    leftBackExtended = !leftBackExtended;
+  }
+
+  public void toggleFront() {
+    if (rightFrontExtended && leftFrontExtended) {
+      rightFront.set(REVERSE);
+      leftFront.set(REVERSE);
+    } else {
+      rightFront.set(FORWARD);
+      leftFront.set(FORWARD);
+    }
+    rightFrontExtended = !rightFrontExtended;
+    leftFrontExtended = !leftFrontExtended;
   }
 
   @Override

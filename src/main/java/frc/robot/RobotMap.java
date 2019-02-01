@@ -40,8 +40,8 @@ public class RobotMap {
                                                   // go. 0.8, for example, means 80% max motor speed
 
   public static class rightStick {
-    public static final int cycleVisionMode = 6;
-    public static final int cycleCamMode = 7;
+    public static final int cycleVisionMode = 11;
+    public static final int cycleCamMode = 10;
   }
 
   public static class climber {
@@ -53,6 +53,10 @@ public class RobotMap {
     public static final int leftFrontReverse = 5;
     public static final int leftBackExtend = 6;
     public static final int leftBackReverse = 7;
+    public static final double speedLimiter = 0.50; // Multiply by 100 | maximum throttle
+    // Buttons
+    public static final int normalDriveButton = 3;
+    public static final int turboDriveButton = 1;
   }
 
   public static class pcm {

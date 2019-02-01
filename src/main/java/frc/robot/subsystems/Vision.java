@@ -31,8 +31,6 @@ public class Vision extends Subsystem {
     ts = nTable.getEntry("ts");
 
     driverMode = false;
-    
-    nTable.getEntry("ledMode").setDouble(1.0);
   }
 
   public void setLedMode(int num) {
