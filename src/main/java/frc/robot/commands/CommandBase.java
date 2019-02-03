@@ -10,6 +10,7 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.DriveTrain;
+import frc.robot.subsystems.Grabber;
 import frc.robot.subsystems.Vision;
 import frc.robot.OI;
 
@@ -20,6 +21,7 @@ public class CommandBase extends Command {
   public static DriveTrain driveTrain;
   public static Vision vision;
   public static Climber climber;
+  public static Grabber grabber;
 
   // Init all subsystems
   public static void init() {
@@ -28,6 +30,7 @@ public class CommandBase extends Command {
     climber = new Climber();
     driveTrain = new DriveTrain();
     vision = new Vision();
+    grabber = new Grabber();
 
     OI.init();
   }

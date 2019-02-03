@@ -7,6 +7,9 @@
 
 package frc.robot.subsystems;
 
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.PWMTalonSRX;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -23,6 +26,7 @@ public class Climber extends Subsystem {
   DoubleSolenoid.Value OFF = DoubleSolenoid.Value.kReverse;
   DoubleSolenoid rightFront, rightBack, leftFront, leftBack;
   PWMTalonSRX backDriveLeft, backDriveRight;
+  CANSparkMax arm;
   boolean rightFrontExtended, rightBackExtended, leftFrontExtended, leftBackExtended, gg = false;
 
   public Climber() {
@@ -36,8 +40,10 @@ public class Climber extends Subsystem {
     leftBack = new DoubleSolenoid(RobotMap.pcm.mainPcm, RobotMap.climber.leftBackExtend,
         RobotMap.climber.leftBackReverse);
 
-        backDriveLeft = new PWMTalonSRX(0);
-        backDriveRight = new PWMTalonSRX(1);
+        backDriveLeft = new PWMTalonSRX(8);
+        backDriveRight = new PWMTalonSRX(9);
+
+        arm = new CANSparkMax(5, MotorType.kBrushless);
 
         backDriveRight.setInverted(true);
 
@@ -98,15 +104,15 @@ public class Climber extends Subsystem {
     extended = !extended;
   }
 
-  public void driveBack(double amnt) {
-    backDriveLeft.set(amnt);
-    backDriveRight.set(-amnt);
+   public void driveBack(double amnt) {
+     backDriveLeft.set(amnt);
+     backDriveRight.set(-amnt);
   }
 
-  public void driveIndividual(double left, double right) {
-    backDriveLeft.set(left);
-    backDriveRight.set(right);
-  }
+  // public void driveIndividual(double left, double right) {
+  //   backDriveLeft.set(left);
+  //   backDriveRight.set(right);
+  // }
 
   public void toggleAll() {
     if (gg) {
@@ -121,6 +127,10 @@ public class Climber extends Subsystem {
       rightFront.set(FORWARD);
     }
     gg = !gg;
+  }
+  
+  public void driveArm(double num) {
+    arm.set(num);
   }
 
   public void toggleBack() {

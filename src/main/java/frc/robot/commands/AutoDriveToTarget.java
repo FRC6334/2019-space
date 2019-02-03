@@ -43,7 +43,7 @@ public class AutoDriveToTarget extends CommandBase {
 
     if (target == 0) {
       System.out.println("No target. Spinning aimlessly until I find something.");
-      climber.driveIndividual(0.3, -0.3);
+      // climber.driveIndividual(0.3, -0.3);
     } else if (target == 1) {
       double throttle = 0.07 * limelight.getEntry("tx").getDouble(0);
       if (Math.abs(throttle) > 0.5) {
@@ -54,7 +54,7 @@ public class AutoDriveToTarget extends CommandBase {
         throttle = sign * 0.5;
       }
       System.out.println(throttle);
-      climber.driveIndividual(-throttle, throttle);
+      // climber.driveIndividual(-throttle, throttle);
     }
   }
 
@@ -67,11 +67,11 @@ public class AutoDriveToTarget extends CommandBase {
   @Override
   protected void end() {
     System.out.println("end");
-    climber.driveIndividual(0, 0);
+    // climber.driveIndividual(0, 0);
   }
 
   // Called when another command which requires one or more of the same
-  // subsystems is scheduled to run
+  // subs*ystems is scheduled to run
   @Override
   protected void interrupted() {
     System.out.println("interrupt auto");
