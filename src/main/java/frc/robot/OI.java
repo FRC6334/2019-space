@@ -21,7 +21,7 @@ public class OI {
   public static void init() {
     rightDriveStick = new Joystick(RobotMap.rightDriveStick);
     leftDriveStick = new Joystick(RobotMap.leftDriveStick);
-    // auxStick = new Joystick(RobotMap.auxillaryStick);
+    auxStick = new Joystick(RobotMap.auxillaryStick);
   }
 
   public static Joystick getRightDriveStick() {

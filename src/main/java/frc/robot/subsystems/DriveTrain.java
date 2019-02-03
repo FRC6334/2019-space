@@ -8,12 +8,12 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.Compressor;
-import edu.wpi.first.wpilibj.PWMTalonSRX;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.RobotMap;
 import frc.robot.commands.TankDrive;
-
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.kauailabs.navx.frc.AHRS;
 
 /**
@@ -24,25 +24,25 @@ public class DriveTrain extends Subsystem {
   // here. Call these from Commands.
 
   AHRS navx;
-  PWMTalonSRX leftMotor1, leftMotor2, rightMotor1, rightMotor2;
+  CANSparkMax leftMotor1, leftMotor2, rightMotor1, rightMotor2;
   Compressor compressor;
 
   public DriveTrain() {
-    leftMotor1 = new PWMTalonSRX(RobotMap.leftMotor1);
-    // leftMotor2 = new TalonSRX(RobotMap.leftMotor2);
-    rightMotor1 = new PWMTalonSRX(RobotMap.rightMotor1);
-    // rightMotor2 = new TalonSRX(RobotMap.rightMotor2);
+    leftMotor1 = new CANSparkMax(RobotMap.leftMotor1, MotorType.kBrushless);
+    leftMotor2 = new CANSparkMax(RobotMap.leftMotor2, MotorType.kBrushless);
+    rightMotor1 = new CANSparkMax(RobotMap.rightMotor1, MotorType.kBrushless);
+    rightMotor2 = new CANSparkMax(RobotMap.rightMotor2, MotorType.kBrushless);
 
     rightMotor1.setInverted(true);
-    //rightMotor2.setInverted(true);
+    rightMotor2.setInverted(true);
 
     //leftMotor1.setNeutralMode(NeutralMode.Brake);
     //leftMotor2.setNeutralMode(NeutralMode.Brake);
     //rightMotor1.setNeutralMode(NeutralMode.Brake);
     //rightMotor2.setNeutralMode(NeutralMode.Brake);
 
-    // compressor = new Compressor(0);
-    // compressor.setClosedLoopControl(true);
+    compressor = new Compressor(RobotMap.compressor);
+    compressor.setClosedLoopControl(true);
 
     navx = new AHRS(SPI.Port.kMXP);
     navx.reset();
@@ -54,9 +54,9 @@ public class DriveTrain extends Subsystem {
 
   private void setMotorValues(double left, double right) {
     leftMotor1.set(left * RobotMap.speedLimiter);
-    //leftMotor2.set(ControlMode.PercentOutput, left);
+    leftMotor2.set(left * RobotMap.speedLimiter);
     rightMotor1.set(right * RobotMap.speedLimiter);
-   // rightMotor2.set(ControlMode.PercentOutput, right);
+    rightMotor2.set(right * RobotMap.speedLimiter);
   }
 
   @Override

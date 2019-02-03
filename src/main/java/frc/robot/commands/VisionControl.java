@@ -40,6 +40,7 @@ public class VisionControl extends CommandBase {
         visionMode++;
         vision.setLedMode(visionMode);
       }
+      System.out.println("Vision mode: " + visionMode);
     }
     if (rightStick.getRawButtonPressed(RobotMap.rightStick.cycleCamMode)) {
       vision.toggleCamMode();
