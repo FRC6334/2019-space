@@ -36,6 +36,7 @@ public class TankDrive extends CommandBase {
     double leftThrottle = Math.abs(leftStick.getY()) < 0.05 ? 0 : leftStick.getY(); // Handle deadband
     double rightThrottle = Math.abs(rightStick.getY()) < 0.05 ? 0 : rightStick.getY();
     // for other programmers: DO NOT call .tankDrive or .arcadeDrive (TBD) on a condition! You always must send something or else the Talon will resume it's last instruction. Send 0 to stop them
+    driveTrain.tankDrive(leftThrottle, rightThrottle);
   }
 
   // Make this return true when this Command no longer needs to run execute()

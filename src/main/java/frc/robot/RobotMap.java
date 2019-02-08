@@ -32,16 +32,23 @@ public class RobotMap {
 
   // Drivetrain motors. Look at the bot when the battery is closest to you and you
   // shall see :)
-  public static final int leftMotor1 = 3;
-  public static final int leftMotor2 = 4;
-  public static final int rightMotor1 = 1; // temp, set to 3
-  public static final int rightMotor2 = 2;
-  public static final float speedLimiter = 0.33f; // Out of 1.0, this value represents the max speed that the robot will
+  public static final int leftFrontMotor = 3;
+  public static final int leftBackMotor = 4;
+  public static final int rightFrontMotor = 1;
+  public static final int rightBackMotor = 2;
+  public static final float speedLimiter = 0.2f; // Out of 1.0, this value represents the max speed that the robot will
                                                   // go. 0.8, for example, means 80% max motor speed
 
   public static class rightStick {
     public static final int cycleVisionMode = 11;
     public static final int cycleCamMode = 10;
+  }
+
+  public static class encoderMath {
+    public static final double hatchTwoLow = -7.65; // Second hatch on rocket position using the arm
+    public static final double hatchTwoHigh = -8; // You know the rest
+    public static final double hatchThreeLow = -14.80;
+    public static final double hatchThreeHigh = -15.09;
   }
 
   public static class climber {

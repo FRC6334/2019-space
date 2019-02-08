@@ -7,6 +7,7 @@
 
 package frc.robot.subsystems;
 
+import com.revrobotics.CANEncoder;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
@@ -27,6 +28,7 @@ public class Climber extends Subsystem {
   DoubleSolenoid rightFront, rightBack, leftFront, leftBack;
   PWMTalonSRX backDriveLeft, backDriveRight;
   CANSparkMax arm;
+  CANEncoder armEncoder;
   boolean rightFrontExtended, rightBackExtended, leftFrontExtended, leftBackExtended, gg = false;
 
   public Climber() {
@@ -44,6 +46,8 @@ public class Climber extends Subsystem {
         backDriveRight = new PWMTalonSRX(9);
 
         arm = new CANSparkMax(5, MotorType.kBrushless);
+
+        armEncoder = new CANEncoder(arm);
 
         backDriveRight.setInverted(true);
 
@@ -91,6 +95,14 @@ public class Climber extends Subsystem {
       System.out.println("Piston toggler was fed an unhandled button! " + button);
       break;
     }
+  }
+
+  public double getPosition() {
+    return armEncoder.getPosition();
+  }
+
+  public double getVelocity() {
+    return armEncoder.getVelocity();
   }
 
   boolean extended = true;

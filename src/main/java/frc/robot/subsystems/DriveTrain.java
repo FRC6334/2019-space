@@ -24,17 +24,17 @@ public class DriveTrain extends Subsystem {
   // here. Call these from Commands.
 
   AHRS navx;
-  CANSparkMax leftMotor1, leftMotor2, rightMotor1, rightMotor2;
+  CANSparkMax rightFront, rightBack, leftFront, leftBack;
   Compressor compressor;
 
   public DriveTrain() {
-    leftMotor1 = new CANSparkMax(RobotMap.leftMotor1, MotorType.kBrushless);
-    leftMotor2 = new CANSparkMax(RobotMap.leftMotor2, MotorType.kBrushless);
-    rightMotor1 = new CANSparkMax(RobotMap.rightMotor1, MotorType.kBrushless);
-    rightMotor2 = new CANSparkMax(RobotMap.rightMotor2, MotorType.kBrushless);
+    leftFront = new CANSparkMax(RobotMap.leftFrontMotor, MotorType.kBrushless);
+    leftBack = new CANSparkMax(RobotMap.leftBackMotor, MotorType.kBrushless);
+    rightFront = new CANSparkMax(RobotMap.rightFrontMotor, MotorType.kBrushless);
+    rightBack = new CANSparkMax(RobotMap.rightBackMotor, MotorType.kBrushless);
 
-    rightMotor1.setInverted(true);
-    rightMotor2.setInverted(true);
+    leftFront.setInverted(true);
+    leftBack.setInverted(true);
 
     //leftMotor1.setNeutralMode(NeutralMode.Brake);
     //leftMotor2.setNeutralMode(NeutralMode.Brake);
@@ -53,10 +53,10 @@ public class DriveTrain extends Subsystem {
   }
 
   private void setMotorValues(double left, double right) {
-    leftMotor1.set(left * RobotMap.speedLimiter);
-    leftMotor2.set(left * RobotMap.speedLimiter);
-    rightMotor1.set(right * RobotMap.speedLimiter);
-    rightMotor2.set(right * RobotMap.speedLimiter);
+    leftFront.set(left * RobotMap.speedLimiter);
+    leftBack.set(left * RobotMap.speedLimiter);
+    rightFront.set(right * RobotMap.speedLimiter);
+    rightBack.set(right * RobotMap.speedLimiter);
   }
 
   @Override

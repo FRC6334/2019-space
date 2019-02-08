@@ -8,6 +8,9 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.buttons.Button;
+import edu.wpi.first.wpilibj.buttons.JoystickButton;
+import frc.robot.commands.MoveTo47;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -22,6 +25,10 @@ public class OI {
     rightDriveStick = new Joystick(RobotMap.rightDriveStick);
     leftDriveStick = new Joystick(RobotMap.leftDriveStick);
     auxStick = new Joystick(RobotMap.auxillaryStick);
+
+    Button moveArmToPos = new JoystickButton(auxStick, 2);
+
+    moveArmToPos.whileHeld(new MoveTo47());
   }
 
   public static Joystick getRightDriveStick() {

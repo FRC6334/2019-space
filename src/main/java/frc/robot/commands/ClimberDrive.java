@@ -8,6 +8,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.OI;
 import frc.robot.RobotMap;
 
@@ -35,7 +36,7 @@ public class ClimberDrive extends CommandBase {
       climber.toggleFront();
     if (rightStick.getRawButtonPressed(7))
       climber.toggleBack();
-    // if (rightStick.getRawButtonPressed(11)) climber.togglePiston(11);
+    if (rightStick.getRawButtonPressed(5)) climber.togglePiston(11);
     // if (rightStick.getRawButtonPressed(10)) climber.togglePiston(10);
     if (rightStick.getRawButtonPressed(3))
       climber.toggleAll();
@@ -53,6 +54,9 @@ public class ClimberDrive extends CommandBase {
       climber.driveArm(0);
     else
       climber.driveArm(auxJoystick.getY() * 0.50);
+
+    SmartDashboard.putNumber("Position", climber.getPosition());
+    SmartDashboard.putNumber("Velocity", climber.getVelocity());
   }
 
   // Make this return true when this Command no longer needs to run execute()
