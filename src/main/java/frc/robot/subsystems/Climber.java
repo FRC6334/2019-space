@@ -33,8 +33,7 @@ public class Climber extends Subsystem {
 
   public Climber() {
     System.out.println("Climber subsystem init");
-    rightFront = new DoubleSolenoid(RobotMap.pcm.mainPcm, RobotMap.climber.rightFrontExtend,
-        RobotMap.climber.rightFrontReverse);
+    rightFront = new DoubleSolenoid(RobotMap.pcm.auxPcm, 4, 5);
     rightBack = new DoubleSolenoid(RobotMap.pcm.mainPcm, RobotMap.climber.rightBackExtend,
         RobotMap.climber.rightBackReverse);
     leftFront = new DoubleSolenoid(RobotMap.pcm.mainPcm, RobotMap.climber.leftFrontExtend,
@@ -118,7 +117,7 @@ public class Climber extends Subsystem {
 
    public void driveBack(double amnt) {
      backDriveLeft.set(amnt);
-     backDriveRight.set(-amnt);
+     backDriveRight.set(amnt);
   }
 
   // public void driveIndividual(double left, double right) {
@@ -142,7 +141,7 @@ public class Climber extends Subsystem {
   }
   
   public void driveArm(double num) {
-    arm.set(num);
+    //arm.set(num);
   }
 
   public void toggleBack() {

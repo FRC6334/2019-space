@@ -26,9 +26,9 @@ public class OI {
     leftDriveStick = new Joystick(RobotMap.leftDriveStick);
     auxStick = new Joystick(RobotMap.auxillaryStick);
 
-    Button moveArmToPos = new JoystickButton(auxStick, 2);
+    // Button moveArmToPos = new JoystickButton(auxStick, 2);
 
-    moveArmToPos.whileHeld(new MoveTo47());
+    // moveArmToPos.whileHeld(new MoveTo47());
   }
 
   public static Joystick getRightDriveStick() {
