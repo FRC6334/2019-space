@@ -53,10 +53,10 @@ public class DriveTrain extends Subsystem {
   }
 
   private void setMotorValues(double left, double right) {
-    leftFront.set(left * RobotMap.speedLimiter);
-    leftBack.set(left * RobotMap.speedLimiter);
-    rightFront.set(right * RobotMap.speedLimiter);
-    rightBack.set(right * RobotMap.speedLimiter);
+    leftFront.set(left);
+    leftBack.set(left);
+    rightFront.set(right);
+    rightBack.set(right);
   }
 
   @Override

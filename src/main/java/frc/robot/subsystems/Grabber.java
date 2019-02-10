@@ -41,6 +41,11 @@ public class Grabber extends Subsystem {
     diskExtended = !diskExtended;
   }
 
+  public void setForward() {
+    disk.set(FORWARD);
+    diskExtended = true;
+  }
+
   @Override
   public void initDefaultCommand() {
     setDefaultCommand(new DiskGrabber());

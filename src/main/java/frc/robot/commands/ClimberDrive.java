@@ -56,9 +56,9 @@ public class ClimberDrive extends CommandBase {
     }
 
     if (Math.abs(auxJoystick.getY()) <= 0.05) // Arm is disabled, just drives the climb motors here
-      climber.driveBack(0);
+      climber.driveArm(0);
     else
-      climber.driveBack(auxJoystick.getY() * 0.50);
+      climber.driveArm(auxJoystick.getY() * 0.25);
 
     SmartDashboard.putNumber("Position", climber.getPosition());
     SmartDashboard.putNumber("Velocity", climber.getVelocity());

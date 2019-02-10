@@ -141,7 +141,7 @@ public class Climber extends Subsystem {
   }
   
   public void driveArm(double num) {
-    //arm.set(num);
+    arm.set(num);
   }
 
   public void toggleBack() {
