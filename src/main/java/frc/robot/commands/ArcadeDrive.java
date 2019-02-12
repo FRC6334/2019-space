@@ -12,15 +12,15 @@ import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.OI;
 
-public class TankDrive extends CommandBase {
+public class ArcadeDrive extends CommandBase {
 
   Joystick rightStick;
   Joystick leftStick;
   boolean extended = false;
-  PowerDistributionPanel pdp;
+  boolean tank = false;
 
-  public TankDrive() {
-    super("TankDrive");
+  public ArcadeDrive() {
+    super("ArcadeDrive");
     System.out.println("TankDrive command init");
     requires(driveTrain);
   }
@@ -31,22 +31,19 @@ public class TankDrive extends CommandBase {
     System.out.println("TankDrive command init 2");
     rightStick = OI.getRightDriveStick();
     leftStick = OI.getLeftDriveStick();
-    pdp = new PowerDistributionPanel();
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    double leftThrottle = Math.abs(leftStick.getY()) < 0.05 ? 0 : leftStick.getY(); // Handle deadband
-    double rightThrottle = Math.abs(rightStick.getY()) < 0.05 ? 0 : rightStick.getY();
+    double leftX = Math.abs(leftStick.getX()) < 0.05 ? 0 : leftStick.getX();
+    double leftY = Math.abs(leftStick.getY()) < 0.05 ? 0 : leftStick.getY(); // Handle deadband
+    double rightX = Math.abs(rightStick.getX()) < 0.05 ? 0 : rightStick.getX();
+    double rightY = Math.abs(rightStick.getY()) < 0.05 ? 0 : rightStick.getY();
     // for other programmers: DO NOT call .tankDrive or .arcadeDrive (TBD) on a condition! You always must send something or else the Talon will resume it's last instruction. Send 0 to stop them
-    if (rightStick.getRawButtonPressed(4)) {
-      driveTrain.tankDrive(0.7, 0.7);
-    }
-    driveTrain.tankDrive(leftThrottle, rightThrottle);
+    if (tank) driveTrain.tankDrive(leftY, rightY);
+    else driveTrain.arcadeDrive(leftX, leftY);
 
-    SmartDashboard.putNumber("Battery IN voltage", pdp.getVoltage());
-    SmartDashboard.putNumber("Power drawn all channels", pdp.getTotalPower());
   }
 
   // Make this return true when this Command no longer needs to run execute()

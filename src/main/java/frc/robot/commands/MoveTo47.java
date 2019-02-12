@@ -24,18 +24,13 @@ public class MoveTo47 extends CommandBase {
   @Override
   protected void initialize() {
     System.out.println("Move to 47 started");
+    climber.setArmPos(-7.6);
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    if (climber.getPosition() < -7.60) {
-      upThere = true;
-    } else if (climber.getPosition() > -7.60 && !upThere) {
-      climber.driveArm(-0.1);
-    } else if (upThere) {
-      climber.driveArm(-0.06);
-    }
+    System.out.println("m47exec");
   }
 
   public boolean isFinished() { // Do not worry about this method. It will be interrupted when the button is released (2)

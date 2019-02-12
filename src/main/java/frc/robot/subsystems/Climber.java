@@ -8,7 +8,9 @@
 package frc.robot.subsystems;
 
 import com.revrobotics.CANEncoder;
+import com.revrobotics.CANPIDController;
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.ControlType;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
@@ -29,6 +31,7 @@ public class Climber extends Subsystem {
   PWMTalonSRX backDriveLeft, backDriveRight;
   CANSparkMax arm;
   CANEncoder armEncoder;
+  CANPIDController armPID;
   boolean rightFrontExtended, rightBackExtended, leftFrontExtended, leftBackExtended, gg = false;
 
   public Climber() {
@@ -45,8 +48,8 @@ public class Climber extends Subsystem {
         backDriveRight = new PWMTalonSRX(9);
 
         arm = new CANSparkMax(5, MotorType.kBrushless);
-
         armEncoder = new CANEncoder(arm);
+        armPID = new CANPIDController(arm);
 
         backDriveRight.setInverted(true);
 
@@ -54,6 +57,17 @@ public class Climber extends Subsystem {
     rightBack.set(REVERSE);
     leftFront.set(REVERSE);
     leftBack.set(REVERSE);
+
+    armPID.setP(0.05);
+    armPID.setI(0);
+    armPID.setD(1);
+    armPID.setIZone(0);
+    armPID.setFF(0);
+    armPID.setOutputRange(-0.15, 0.30);
+  }
+
+  public void setArmPos(double revs) {
+    armPID.setReference(revs, ControlType.kPosition);
   }
 
   public void togglePiston(int button) {
@@ -141,7 +155,7 @@ public class Climber extends Subsystem {
   }
   
   public void driveArm(double num) {
-    arm.set(num);
+    arm.set(num * RobotMap.speedLimiter);
   }
 
   public void toggleBack() {
