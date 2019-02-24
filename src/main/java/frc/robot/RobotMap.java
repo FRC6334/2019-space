@@ -51,6 +51,10 @@ public class RobotMap {
     public static final double hatchThreeHigh = -15.09;
   }
 
+  public static class arm {
+    public static final int armTalonId = 7;
+  }
+
   public static class climber {
     public static final int rightFrontExtend = 0;
     public static final int rightFrontReverse = 1;

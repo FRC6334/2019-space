@@ -27,7 +27,7 @@ public class Climber extends Subsystem {
   DoubleSolenoid.Value FORWARD = DoubleSolenoid.Value.kForward;
   DoubleSolenoid.Value REVERSE = DoubleSolenoid.Value.kReverse;
   DoubleSolenoid.Value OFF = DoubleSolenoid.Value.kReverse;
-  DoubleSolenoid rightFront, rightBack, leftFront, leftBack;
+  DoubleSolenoid front, back;
   PWMTalonSRX backDriveLeft, backDriveRight;
   CANSparkMax arm;
   CANEncoder armEncoder;
@@ -36,13 +36,8 @@ public class Climber extends Subsystem {
 
   public Climber() {
     System.out.println("Climber subsystem init");
-    rightFront = new DoubleSolenoid(RobotMap.pcm.auxPcm, 4, 5);
-    rightBack = new DoubleSolenoid(RobotMap.pcm.mainPcm, RobotMap.climber.rightBackExtend,
-        RobotMap.climber.rightBackReverse);
-    leftFront = new DoubleSolenoid(RobotMap.pcm.mainPcm, RobotMap.climber.leftFrontExtend,
-        RobotMap.climber.leftFrontReverse);
-    leftBack = new DoubleSolenoid(RobotMap.pcm.mainPcm, RobotMap.climber.leftBackExtend,
-        RobotMap.climber.leftBackReverse);
+    front = new DoubleSolenoid(RobotMap.pcm.mainPcm, RobotMap.climber.rightFrontExtend, RobotMap.climber.rightFrontReverse);
+    back = new DoubleSolenoid(RobotMap.pcm.mainPcm, RobotMap.climber.rightBackExtend, RobotMap.climber.rightBackReverse);
 
         backDriveLeft = new PWMTalonSRX(8);
         backDriveRight = new PWMTalonSRX(9);
@@ -53,61 +48,19 @@ public class Climber extends Subsystem {
 
         backDriveRight.setInverted(true);
 
-    rightFront.set(REVERSE);
-    rightBack.set(REVERSE);
-    leftFront.set(REVERSE);
-    leftBack.set(REVERSE);
+    front.set(REVERSE);
+    back.set(REVERSE);
 
     armPID.setP(0.05);
     armPID.setI(0);
     armPID.setD(1);
     armPID.setIZone(0);
     armPID.setFF(0);
-    armPID.setOutputRange(-0.15, 0.30);
+    armPID.setOutputRange(-0.15, 0.5);
   }
 
   public void setArmPos(double revs) {
     armPID.setReference(revs, ControlType.kPosition);
-  }
-
-  public void togglePiston(int button) {
-    switch (button) {
-    case 6:
-      if (leftFrontExtended) {
-        leftFront.set(REVERSE);
-      } else {
-        leftFront.set(FORWARD);
-      }
-      leftFrontExtended = !leftFrontExtended;
-      break;
-    case 7:
-      if (leftBackExtended) {
-        leftBack.set(REVERSE);
-      } else {
-        leftBack.set(FORWARD);
-      }
-      leftBackExtended = !leftBackExtended;
-      break;
-    case 10:
-      if (rightBackExtended) {
-        rightBack.set(REVERSE);
-      } else {
-        rightBack.set(FORWARD);
-      }
-      rightBackExtended = !rightBackExtended;
-      break;
-    case 11:
-      if (rightFrontExtended) {
-        rightFront.set(REVERSE);
-      } else {
-        rightFront.set(FORWARD);
-      }
-      rightFrontExtended = !rightFrontExtended;
-      break;
-    default:
-      System.out.println("Piston toggler was fed an unhandled button! " + button);
-      break;
-    }
   }
 
   public double getPosition() {
@@ -116,17 +69,6 @@ public class Climber extends Subsystem {
 
   public double getVelocity() {
     return armEncoder.getVelocity();
-  }
-
-  boolean extended = true;
-  public void testR() {
-    if (extended) {
-      rightBack.set(REVERSE);
-    } else {
-      rightBack.set(FORWARD);
-    }
-    System.out.println(extended);
-    extended = !extended;
   }
 
    public void driveBack(double amnt) {
@@ -141,15 +83,11 @@ public class Climber extends Subsystem {
 
   public void toggleAll() {
     if (gg) {
-      rightBack.set(REVERSE);
-      leftBack.set(REVERSE);
-      leftFront.set(REVERSE);
-      rightFront.set(REVERSE);
+      front.set(REVERSE);
+      back.set(REVERSE);
     } else {
-      rightBack.set(FORWARD);
-      leftBack.set(FORWARD);
-      leftFront.set(FORWARD);
-      rightFront.set(FORWARD);
+      front.set(FORWARD);
+      back.set(FORWARD);
     }
     gg = !gg;
   }
@@ -160,11 +98,9 @@ public class Climber extends Subsystem {
 
   public void toggleBack() {
     if (rightBackExtended && leftBackExtended) {
-      rightBack.set(REVERSE);
-      leftBack.set(REVERSE);
+      back.set(REVERSE);
     } else {
-      rightBack.set(FORWARD);
-      leftBack.set(FORWARD);
+      back.set(FORWARD);
     }
     rightBackExtended = !rightBackExtended;
     leftBackExtended = !leftBackExtended;
@@ -172,11 +108,9 @@ public class Climber extends Subsystem {
 
   public void toggleFront() {
     if (rightFrontExtended && leftFrontExtended) {
-      rightFront.set(REVERSE);
-      leftFront.set(REVERSE);
+      front.set(REVERSE);
     } else {
-      rightFront.set(FORWARD);
-      leftFront.set(FORWARD);
+      front.set(FORWARD);
     }
     rightFrontExtended = !rightFrontExtended;
     leftFrontExtended = !leftFrontExtended;

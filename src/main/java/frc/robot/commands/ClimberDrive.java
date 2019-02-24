@@ -36,8 +36,6 @@ public class ClimberDrive extends CommandBase {
       climber.toggleFront();
     if (rightStick.getRawButtonPressed(7))
       climber.toggleBack();
-    if (rightStick.getRawButtonPressed(5))
-      climber.togglePiston(11);
     // if (rightStick.getRawButtonPressed(10)) climber.togglePiston(10);
     if (rightStick.getRawButtonPressed(3))
       climber.toggleAll();

@@ -10,7 +10,6 @@ package frc.robot.subsystems;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.command.Subsystem;
-import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import frc.robot.RobotMap;
 import frc.robot.commands.ArcadeDrive;
 import com.revrobotics.CANSparkMax;
@@ -27,7 +26,6 @@ public class DriveTrain extends Subsystem {
   AHRS navx;
   CANSparkMax rightFront, rightBack, leftFront, leftBack;
   Compressor compressor;
-  DifferentialDrive drive;
 
   public DriveTrain() {
     leftFront = new CANSparkMax(RobotMap.leftFrontMotor, MotorType.kBrushless);
@@ -38,7 +36,6 @@ public class DriveTrain extends Subsystem {
     rightBack.follow(rightFront);
     leftBack.follow(leftFront);
 
-    drive = new DifferentialDrive(leftFront, leftBack);
 
     leftFront.setInverted(true);
     leftBack.setInverted(true);

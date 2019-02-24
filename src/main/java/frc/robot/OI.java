@@ -10,7 +10,7 @@ package frc.robot;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
-import frc.robot.commands.MoveTo47;
+import frc.robot.commands.*;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -27,8 +27,14 @@ public class OI {
     auxStick = new Joystick(RobotMap.auxillaryStick);
 
     Button moveArmToPos = new JoystickButton(leftDriveStick, 9);
+    Button driveVacuum = new JoystickButton(auxStick, 8);
+    Button movePivotDown = new JoystickButton(auxStick, 4);
+    Button movePivotUp = new JoystickButton(auxStick, 5);
 
     moveArmToPos.whileHeld(new MoveTo47());
+    driveVacuum.whileHeld(new RunVacuumForward());
+    movePivotDown.whileHeld(new MovePivotDown());
+    movePivotUp.whileHeld(new MovePivotUp());
   }
 
   public static Joystick getRightDriveStick() {
