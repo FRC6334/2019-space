@@ -8,7 +8,6 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
-import frc.robot.subsystems.ArmPivot;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.Grabber;
@@ -25,7 +24,6 @@ public class CommandBase extends Command {
   public static Climber climber;
   public static Grabber grabber;
   public static Vacuum vacuum;
-  public static ArmPivot pivot;
 
   // Init all subsystems
   public static void init() {
@@ -36,7 +34,6 @@ public class CommandBase extends Command {
     vision = new Vision();
     grabber = new Grabber();
     vacuum = new Vacuum();
-    pivot = new ArmPivot();
 
     OI.init();
   }

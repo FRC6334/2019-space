@@ -51,12 +51,12 @@ public class Climber extends Subsystem {
     front.set(REVERSE);
     back.set(REVERSE);
 
-    armPID.setP(0.05);
+    armPID.setP(0.25);
     armPID.setI(0);
-    armPID.setD(1);
+    armPID.setD(0.20);
     armPID.setIZone(0);
     armPID.setFF(0);
-    armPID.setOutputRange(-0.15, 0.5);
+    armPID.setOutputRange(-0.15, 0.6);
   }
 
   public void setArmPos(double revs) {

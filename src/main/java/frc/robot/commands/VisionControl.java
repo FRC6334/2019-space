@@ -15,6 +15,7 @@ import frc.robot.commands.CommandBase;
 public class VisionControl extends CommandBase {
 
   Joystick rightStick = OI.getRightDriveStick();
+  Joystick auxJoystick = OI.getAuxStick();
   int visionMode = 0;
 
   public VisionControl() {
@@ -44,6 +45,18 @@ public class VisionControl extends CommandBase {
     }
     if (rightStick.getRawButtonPressed(RobotMap.rightStick.cycleCamMode)) {
       vision.toggleCamMode();
+    }
+
+    if (auxJoystick.getRawButtonPressed(4)) {
+      vision.camLow();
+    }
+
+    if (auxJoystick.getRawButtonPressed(2)) {
+      vision.camMid();
+    }
+
+    if (auxJoystick.getRawButtonPressed(5)) {
+      vision.camHigh();
     }
   }
 

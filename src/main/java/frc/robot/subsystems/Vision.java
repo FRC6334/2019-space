@@ -10,6 +10,7 @@ package frc.robot.subsystems;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.commands.VisionControl;
 
@@ -20,9 +21,11 @@ public class Vision extends Subsystem {
 
   NetworkTable nTable;
   NetworkTableEntry tx, ty, ta, tv, ts;
+  Servo cameraServo;
   boolean driverMode;
 
   public Vision() {
+    cameraServo = new Servo(7);
     nTable = NetworkTableInstance.getDefault().getTable("limelight");
     tx = nTable.getEntry("tx");
     ty = nTable.getEntry("ty");
@@ -46,6 +49,21 @@ public class Vision extends Subsystem {
       driverMode = !driverMode;
       nTable.getEntry("camMode").setDouble(0);
     }
+  }
+
+  public void camHigh() {
+    System.out.println("high");
+    cameraServo.set(0.7);
+  }
+
+  public void camMid() {
+    System.out.println("mid");
+    cameraServo.set(0.5);
+  }
+
+  public void camLow() {
+    System.out.println("low");
+    cameraServo.set(0.25);
   }
   // Put methods for controlling this subsystem
   // here. Call these from Commands.

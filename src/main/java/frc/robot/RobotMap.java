@@ -36,7 +36,7 @@ public class RobotMap {
   public static final int leftBackMotor = 4;
   public static final int rightFrontMotor = 1;
   public static final int rightBackMotor = 2;
-  public static final float speedLimiter = 0.2f; // Out of 1.0, this value represents the max speed that the robot will
+  public static final float speedLimiter = 0.4f; // Out of 1.0, this value represents the max speed that the robot will
                                                   // go. 0.8, for example, means 80% max motor speed
 
   public static class rightStick {

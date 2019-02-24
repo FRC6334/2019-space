@@ -27,14 +27,10 @@ public class OI {
     auxStick = new Joystick(RobotMap.auxillaryStick);
 
     Button moveArmToPos = new JoystickButton(leftDriveStick, 9);
-    Button driveVacuum = new JoystickButton(auxStick, 8);
     Button movePivotDown = new JoystickButton(auxStick, 4);
     Button movePivotUp = new JoystickButton(auxStick, 5);
 
     moveArmToPos.whileHeld(new MoveTo47());
-    driveVacuum.whileHeld(new RunVacuumForward());
-    movePivotDown.whileHeld(new MovePivotDown());
-    movePivotUp.whileHeld(new MovePivotUp());
   }
 
   public static Joystick getRightDriveStick() {

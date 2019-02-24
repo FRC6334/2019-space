@@ -29,7 +29,8 @@ public class Grabber extends Subsystem {
 
   public Grabber() {
     System.out.println("Grabber subsystem init");
-    disk = new DoubleSolenoid(RobotMap.pcm.auxPcm, 0, 1); // The disk grabber solenoid is plugged into the main pcm (ID=1), 0 being the open forward channel and 1 being the reverse
+    disk = new DoubleSolenoid(RobotMap.pcm.mainPcm, 4, 5); // The disk grabber solenoid is plugged into the main pcm (ID=1), 0 being the open forward channel and 1 being the reverse
+    disk.set(REVERSE);
   }
 
   public void toggle() {
