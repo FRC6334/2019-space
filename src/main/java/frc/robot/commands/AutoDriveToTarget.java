@@ -18,12 +18,9 @@ public class AutoDriveToTarget extends CommandBase {
 
   public AutoDriveToTarget() {
     super("AutoDrive");
-    System.out.println("wew");
-    // Use requires() here to declare subsystem dependencies
     requires(driveTrain);
     requires(vision);
     requires(climber);
-    System.out.println("lad");
 
     limelight = NetworkTableInstance.getDefault().getTable("limelight");
   }

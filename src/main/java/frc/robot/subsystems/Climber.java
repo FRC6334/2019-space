@@ -45,6 +45,8 @@ public class Climber extends Subsystem {
         arm = new CANSparkMax(5, MotorType.kBrushless);
         armEncoder = new CANEncoder(arm);
         armPID = new CANPIDController(arm);
+        armEncoder.getVelocity();
+        armEncoder.getPosition();
 
         backDriveRight.setInverted(true);
 

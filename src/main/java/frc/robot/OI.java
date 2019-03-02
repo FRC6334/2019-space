@@ -27,9 +27,9 @@ public class OI {
     auxStick = new Joystick(RobotMap.auxillaryStick);
 
     Button moveArmToPos = new JoystickButton(leftDriveStick, 9);
-    Button movePivotDown = new JoystickButton(auxStick, 4);
-    Button movePivotUp = new JoystickButton(auxStick, 5);
+    Button moveArmToHighestRocket = new JoystickButton(leftDriveStick, 8);
 
+    moveArmToHighestRocket.whileHeld(new MoveToHighRocket());
     moveArmToPos.whileHeld(new MoveTo47());
   }
 
