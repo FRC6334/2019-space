@@ -7,42 +7,44 @@
 
 package frc.robot.commands;
 
-public class RunVacuumForward extends CommandBase {
-  public RunVacuumForward() {
-    super("drivevacuumcommand");
-    // Use requires() here to declare subsystem dependencies
-    requires(vacuum);
+import frc.robot.RobotMap;
+
+public class MoveToHighRocket extends CommandBase {
+
+  boolean upThere = false;
+
+  public MoveToHighRocket() {
+    super("MoveToHighRocket");
+    requires(climber);
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    System.out.println("Driving the vacuum motor to create suction...");
+    System.out.println("Move to high rocket started");
+    climber.setArmPos(-15);
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    System.out.println("Suction in progress");
-    vacuum.setForward();
+    System.out.println("high rocket pid exec");
   }
 
-  // Make this return true when this Command no longer needs to run execute()
-  @Override
-  public boolean isFinished() {
+  public boolean isFinished() { // Do not worry about this method. It will be interrupted when the button is released (2)
     return false;
   }
 
   // Called once after isFinished returns true
   @Override
   protected void end() {
+      climber.driveArm(0);
   }
 
   // Called when another command which requires one or more of the same
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
-    System.out.println("Done driving the vacuum motor forwards...");
-    vacuum.setValue(0);
+    System.out.println("Move to high rocket interrupted");
   }
 }

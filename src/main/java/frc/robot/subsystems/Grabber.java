@@ -35,14 +35,17 @@ public class Grabber extends Subsystem {
 
   public void toggle() {
     if (diskExtended) {
+      System.out.println("Grabber is closing.");
       disk.set(REVERSE);
     } else {
+      System.out.println("Grabber is opening.");
       disk.set(FORWARD);
     }
     diskExtended = !diskExtended;
   }
 
   public void setForward() {
+    System.out.println("Grabber has been set forward");
     disk.set(FORWARD);
     diskExtended = true;
   }

@@ -15,6 +15,7 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.PWMTalonSRX;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.RobotMap;
 import frc.robot.commands.ClimberDrive;
@@ -45,6 +46,8 @@ public class Climber extends Subsystem {
         arm = new CANSparkMax(5, MotorType.kBrushless);
         armEncoder = new CANEncoder(arm);
         armPID = new CANPIDController(arm);
+        armEncoder.getVelocity();
+        armEncoder.getPosition();
 
         backDriveRight.setInverted(true);
 
@@ -84,9 +87,11 @@ public class Climber extends Subsystem {
   public void toggleAll() {
     if (gg) {
       front.set(REVERSE);
+      Timer.delay(0.195);
       back.set(REVERSE);
     } else {
       front.set(FORWARD);
+      Timer.delay(0.195);
       back.set(FORWARD);
     }
     gg = !gg;

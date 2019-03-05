@@ -45,14 +45,6 @@ public class ClimberDrive extends CommandBase {
       System.out.println("Toggle grabber");
     }
 
-    if (rightStick.getRawButtonPressed(9)) {
-      climber.driveBack(0.5);
-    }
-
-    if (auxJoystick.getRawButtonPressed(2)) {
-      climber.driveBack(1);
-    }
-
     if (Math.abs(auxJoystick.getY()) <= 0.05) // Arm is disabled, just drives the climb motors here
       climber.driveArm(0);
     else
