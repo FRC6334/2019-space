@@ -63,7 +63,7 @@ public class Vision extends Subsystem {
 
   public void camLow() {
     System.out.println("low");
-    cameraServo.set(0.25);
+    cameraServo.set(0.10);
   }
   // Put methods for controlling this subsystem
   // here. Call these from Commands.

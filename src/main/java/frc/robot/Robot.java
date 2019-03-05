@@ -42,7 +42,7 @@ public class Robot extends TimedRobot {
     CameraServer.getInstance().startAutomaticCapture();
   }
 
-  /**
+  /**h
    * This function is called every robot packet, no matter the mode. Use
    * this for items like diagnostics that you want ran during disabled,
    * autonomous, teleoperated and test.
@@ -89,6 +89,7 @@ public class Robot extends TimedRobot {
      * autonomousCommand = new ExampleCommand(); break; }
      */
     System.out.println("auto init");
+    CommandBase.grabber.setForward();
   }
 
   /**

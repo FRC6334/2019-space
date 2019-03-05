@@ -28,9 +28,13 @@ public class OI {
 
     Button moveArmToPos = new JoystickButton(leftDriveStick, 9);
     Button moveArmToHighestRocket = new JoystickButton(leftDriveStick, 8);
+    Button driveClimberForward = new JoystickButton(rightDriveStick, 4);
+    Button driveClimberBackwards = new JoystickButton(rightDriveStick, 5);
 
     moveArmToHighestRocket.whileHeld(new MoveToHighRocket());
     moveArmToPos.whileHeld(new MoveTo47());
+    driveClimberForward.whileHeld(new DriveClimberForward());
+    driveClimberBackwards.whileHeld(new DriveClimberBackwards());
   }
 
   public static Joystick getRightDriveStick() {
