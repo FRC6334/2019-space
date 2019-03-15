@@ -7,6 +7,7 @@
 
 package frc.robot.subsystems;
 
+import com.kauailabs.navx.frc.AHRS;
 import com.revrobotics.CANEncoder;
 import com.revrobotics.CANPIDController;
 import com.revrobotics.CANSparkMax;
@@ -15,7 +16,8 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.PWMTalonSRX;
-import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.SPI;
+import edu.wpi.first.wpilibj.Ultrasonic;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.RobotMap;
 import frc.robot.commands.ClimberDrive;
@@ -28,31 +30,31 @@ public class Climber extends Subsystem {
   DoubleSolenoid.Value FORWARD = DoubleSolenoid.Value.kForward;
   DoubleSolenoid.Value REVERSE = DoubleSolenoid.Value.kReverse;
   DoubleSolenoid.Value OFF = DoubleSolenoid.Value.kReverse;
-  DoubleSolenoid front, back;
   PWMTalonSRX backDriveLeft, backDriveRight;
-  CANSparkMax arm;
-  CANEncoder armEncoder;
+  CANSparkMax arm, front, back;
+  AHRS navX;
+  CANEncoder armEncoder, frontClimbEncoder, backClimbEncoder;
   CANPIDController armPID;
-  boolean rightFrontExtended, rightBackExtended, leftFrontExtended, leftBackExtended, gg = false;
+  Ultrasonic frontSensor, backSensor;
 
   public Climber() {
     System.out.println("Climber subsystem init");
-    front = new DoubleSolenoid(RobotMap.pcm.mainPcm, RobotMap.climber.rightFrontExtend, RobotMap.climber.rightFrontReverse);
-    back = new DoubleSolenoid(RobotMap.pcm.mainPcm, RobotMap.climber.rightBackExtend, RobotMap.climber.rightBackReverse);
+    navX = new AHRS(SPI.Port.kMXP);
+    frontSensor = new Ultrasonic(1, 0);
+    backSensor = new Ultrasonic(3, 2);
+    backDriveLeft = new PWMTalonSRX(8);
+    backDriveRight = new PWMTalonSRX(9);
+    front = new CANSparkMax(6, MotorType.kBrushless);
+    back = new CANSparkMax(7, MotorType.kBrushless);
 
-        backDriveLeft = new PWMTalonSRX(8);
-        backDriveRight = new PWMTalonSRX(9);
+    arm = new CANSparkMax(5, MotorType.kBrushless);
+    armEncoder = new CANEncoder(arm);
+    frontClimbEncoder = new CANEncoder(front);
+    backClimbEncoder = new CANEncoder(back);
+    armPID = new CANPIDController(arm);
 
-        arm = new CANSparkMax(5, MotorType.kBrushless);
-        armEncoder = new CANEncoder(arm);
-        armPID = new CANPIDController(arm);
-        armEncoder.getVelocity();
-        armEncoder.getPosition();
-
-        backDriveRight.setInverted(true);
-
-    front.set(REVERSE);
-    back.set(REVERSE);
+    backDriveRight.setInverted(true);
+    back.setInverted(true);
 
     armPID.setP(0.25);
     armPID.setI(0);
@@ -60,6 +62,65 @@ public class Climber extends Subsystem {
     armPID.setIZone(0);
     armPID.setFF(0);
     armPID.setOutputRange(-0.15, 0.6);
+  }
+
+  public void resetBothClimbEncoders() {
+    frontClimbEncoder.setPosition(0);
+    backClimbEncoder.setPosition(0);
+  }
+
+  public double getFrontSensorInches() {
+    return frontSensor.getRangeInches();
+  }
+
+  public double getBackSensorInches() {
+    return backSensor.getRangeInches();
+  }
+
+  public void driveFrontClimber(double val) {
+    front.set(val);
+  }
+
+  public void driveBackClimber(double val) {
+    back.set(val);
+  }
+
+  public void driveClimbBoth(double val) {
+    front.set(val);
+    back.set(val);
+  }
+
+  public double getRoll() {
+    return navX.getRoll();
+  }
+
+  public void driveLeftClimbAxle(double val) {
+    backDriveLeft.set(val);
+  }
+
+  public void driveRightClimbAxle(double val) {
+    backDriveRight.set(val);
+  }
+
+  public void driveBothClimbAxleWheels(double val) {
+    backDriveLeft.set(val);
+    backDriveRight.set(val);
+  }
+
+  public double getFrontClimbEncoder() {
+    return frontClimbEncoder.getPosition();
+  }
+
+  public double getBackClimbEncoder() {
+    return backClimbEncoder.getPosition();
+  }
+
+  public double getFrontClimbVoltage() {
+    return front.getBusVoltage();
+  }
+
+  public double getBackClimbVoltage() {
+    return back.getBusVoltage();
   }
 
   public void setArmPos(double revs) {
@@ -74,51 +135,8 @@ public class Climber extends Subsystem {
     return armEncoder.getVelocity();
   }
 
-   public void driveBack(double amnt) {
-     backDriveLeft.set(amnt);
-     backDriveRight.set(amnt);
-  }
-
-  // public void driveIndividual(double left, double right) {
-  //   backDriveLeft.set(left);
-  //   backDriveRight.set(right);
-  // }
-
-  public void toggleAll() {
-    if (gg) {
-      front.set(REVERSE);
-      Timer.delay(0.195);
-      back.set(REVERSE);
-    } else {
-      front.set(FORWARD);
-      Timer.delay(0.195);
-      back.set(FORWARD);
-    }
-    gg = !gg;
-  }
-  
   public void driveArm(double num) {
     arm.set(num * RobotMap.speedLimiter);
-  }
-
-  public void toggleBack() {
-    if (rightBackExtended && leftBackExtended) {
-      back.set(REVERSE);
-    } else {
-      back.set(FORWARD);
-    }
-    rightBackExtended = !rightBackExtended;
-    leftBackExtended = !leftBackExtended;
-  }
-
-  public void toggleFront() {
-    if (rightFrontExtended && leftFrontExtended) {
-      front.set(REVERSE);
-    } else {
-      front.set(FORWARD);
-    }
-    rightFrontExtended = !rightFrontExtended;
-    leftFrontExtended = !leftFrontExtended;
   }
 
   @Override

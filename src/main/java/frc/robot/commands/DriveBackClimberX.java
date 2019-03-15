@@ -7,23 +7,33 @@
 
 package frc.robot.commands;
 
-public class DriveClimberForward extends CommandBase {
-  public DriveClimberForward() {
-    super("driveclimberforward");
+import edu.wpi.first.wpilibj.Joystick;
+import frc.robot.OI;
+import frc.robot.RobotMap.rightStick;
+
+public class DriveBackClimberX extends CommandBase {
+
+  Joystick rightStick;
+
+  public DriveBackClimberX() {
+    super("drivebackclimberx");
     // Use requires() here to declare subsystem dependencies
     requires(climber);
+    rightStick = OI.getRightDriveStick();
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    System.out.println("Driving climber forward");
+    System.out.println("back climber drive init");
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    climber.driveClimbBoth(0.25);
+    if (Math.abs(rightStick.getY()) >= 0.05) {
+      climber.driveBackClimber(rightStick.getY());
+    } else climber.driveBackClimber(0);
   }
 
   // Make this return true when this Command no longer needs to run execute()
@@ -35,15 +45,15 @@ public class DriveClimberForward extends CommandBase {
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    System.out.println("done driving the climber forwards");
-    climber.driveClimbBoth(0);
+    System.out.println("front climber done");
+    climber.driveBackClimber(0);
   }
 
   // Called when another command which requires one or more of the same
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
-    System.out.println("climber forward drive interrupted");
-    climber.driveClimbBoth(0);
+    climber.driveBackClimber(0);
+    System.out.println("back climber drive interrupt");
   }
 }

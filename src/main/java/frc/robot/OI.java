@@ -28,13 +28,15 @@ public class OI {
 
     Button moveArmToPos = new JoystickButton(leftDriveStick, 9);
     Button moveArmToHighestRocket = new JoystickButton(leftDriveStick, 8);
-    Button driveClimberForward = new JoystickButton(rightDriveStick, 4);
-    Button driveClimberBackwards = new JoystickButton(rightDriveStick, 5);
+    Button navXClimb             = new JoystickButton(rightDriveStick, 3);
+    Button driveFrontClimber     = new JoystickButton(rightDriveStick, 8);
+    Button driveBackClimber      = new JoystickButton(rightDriveStick, 9);
 
+    navXClimb.whileHeld(new AutoNavXBalanceClimb());
     moveArmToHighestRocket.whileHeld(new MoveToHighRocket());
     moveArmToPos.whileHeld(new MoveTo47());
-    driveClimberForward.whileHeld(new DriveClimberForward());
-    driveClimberBackwards.whileHeld(new DriveClimberBackwards());
+    driveFrontClimber.toggleWhenPressed(new DriveFrontClimberX());
+    driveBackClimber.toggleWhenPressed(new DriveBackClimberX());
   }
 
   public static Joystick getRightDriveStick() {
