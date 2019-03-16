@@ -30,6 +30,10 @@ public class AutoNavXBalanceClimb extends CommandBase {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
+    balance();
+  }
+
+  public void balance() {
     double roll = climber.getRoll();
     if (Math.abs(roll) < 2)
       roll = 0;
