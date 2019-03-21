@@ -115,6 +115,11 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
     Scheduler.getInstance().run();
+    SmartDashboard.putNumber("Motor #1 position", CommandBase.climber.getFrontClimbEncoder());
+    SmartDashboard.putNumber("Motor #1 velocity", CommandBase.climber.getFrontClimbVoltage());
+    SmartDashboard.putNumber("Motor #2 position", CommandBase.climber.getBackClimbEncoder());
+    SmartDashboard.putNumber("Motor #2 velocity", CommandBase.climber.getBackClimbVoltage());
+    SmartDashboard.putNumber("navx roll", CommandBase.climber.getRoll());
   }
 
   /**

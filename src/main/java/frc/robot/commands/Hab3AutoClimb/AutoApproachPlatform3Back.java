@@ -5,11 +5,13 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands;
+package frc.robot.commands.Hab3AutoClimb;
 
-public class DriveClimberForward extends CommandBase {
-  public DriveClimberForward() {
-    super("driveclimberforward");
+import frc.robot.commands.CommandBase;
+
+public class AutoApproachPlatform3Back extends CommandBase {
+  public AutoApproachPlatform3Back() {
+    super("approachplatformusingback");
     // Use requires() here to declare subsystem dependencies
     requires(climber);
   }
@@ -17,33 +19,45 @@ public class DriveClimberForward extends CommandBase {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    System.out.println("Driving climber forward");
+    System.out.println("Pushing onto the platform using back sensor");
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    climber.driveClimbBoth(0.25);
+    double distance = climber.getBackSensorInches();
+    if (distance > 1.1) {
+      climber.driveBothClimbAxleWheels(0.35);
+    } else {
+      climber.driveBothClimbAxleWheels(0);
+    }
+    if (climber.getBackClimbEncoder() > -65) {
+      climber.driveBackClimber(-0.20);
+    } else {
+      climber.driveBackClimber(0);
+    }
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   public boolean isFinished() {
-    return false;
+    return climber.getBackSensorInches() < 1.1;
   }
 
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    System.out.println("done driving the climber forwards");
-    climber.driveClimbBoth(0);
+    climber.driveBothClimbAxleWheels(0);
+    climber.driveBackClimber(0);
+    System.out.println("The back axle is 1.1\" away from the back platform. ending.");
   }
 
   // Called when another command which requires one or more of the same
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
-    System.out.println("climber forward drive interrupted");
-    climber.driveClimbBoth(0);
+    climber.driveBothClimbAxleWheels(0);
+    climber.driveBackClimber(0);
+    System.out.println("The automatic approach to the back platform was interrupted.");
   }
 }

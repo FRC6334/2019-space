@@ -20,7 +20,6 @@ public class AutoDriveToTarget extends CommandBase {
     super("AutoDrive");
     requires(driveTrain);
     requires(vision);
-    requires(climber);
 
     limelight = NetworkTableInstance.getDefault().getTable("limelight");
   }
@@ -30,6 +29,7 @@ public class AutoDriveToTarget extends CommandBase {
   protected void initialize() {
     System.out.println("Init");
     xOffset = limelight.getEntry("tx").getDouble(0);
+    vision.setLedMode(3);
   }
 
   // Called repeatedly when this Command is scheduled to run
@@ -40,18 +40,18 @@ public class AutoDriveToTarget extends CommandBase {
 
     if (target == 0) {
       System.out.println("No target. Spinning aimlessly until I find something.");
-      // climber.driveIndividual(0.3, -0.3);
+      driveTrain.tankDrive(0.15, -0.15);
     } else if (target == 1) {
       double throttle = 0.07 * limelight.getEntry("tx").getDouble(0);
-      if (Math.abs(throttle) > 0.5) {
+      if (Math.abs(throttle) > 0.25) {
         int sign = 1;
         if (throttle < 0) {
           sign = -1;
         }
-        throttle = sign * 0.5;
+        throttle = sign * 0.25;
       }
       System.out.println(throttle);
-      // climber.driveIndividual(-throttle, throttle);
+      driveTrain.tankDrive(-throttle, throttle);
     }
   }
 
@@ -64,13 +64,16 @@ public class AutoDriveToTarget extends CommandBase {
   @Override
   protected void end() {
     System.out.println("end");
-    // climber.driveIndividual(0, 0);
+    driveTrain.tankDrive(0, 0);
+    vision.setLedMode(1);
   }
 
   // Called when another command which requires one or more of the same
   // subs*ystems is scheduled to run
   @Override
   protected void interrupted() {
-    System.out.println("interrupt auto");
+    System.out.println("interrupt auto limelight target");
+    driveTrain.tankDrive(0, 0);
+    vision.setLedMode(1);
   }
 }

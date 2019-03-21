@@ -7,6 +7,8 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.Joystick;
+import frc.robot.OI;
 import frc.robot.RobotMap;
 
 public class MoveToHighRocket extends CommandBase {
@@ -22,7 +24,7 @@ public class MoveToHighRocket extends CommandBase {
   @Override
   protected void initialize() {
     System.out.println("Move to high rocket started");
-    climber.setArmPos(-15);
+    climber.setArmPos(-16.8);
   }
 
   // Called repeatedly when this Command is scheduled to run
@@ -46,5 +48,6 @@ public class MoveToHighRocket extends CommandBase {
   @Override
   protected void interrupted() {
     System.out.println("Move to high rocket interrupted");
+    climber.driveArm(0);
   }
 }

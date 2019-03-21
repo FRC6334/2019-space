@@ -23,7 +23,7 @@ public class DriveClimberBackwards extends CommandBase {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    climber.driveBack(-0.5);
+    climber.driveBothClimbAxleWheels(-0.25);
   }
 
   // Make this return true when this Command no longer needs to run execute()
@@ -36,7 +36,7 @@ public class DriveClimberBackwards extends CommandBase {
   @Override
   protected void end() {
     System.out.println("done driving the climber backwards");
-    climber.driveBack(0);
+    climber.driveBothClimbAxleWheels(0);
   }
 
   // Called when another command which requires one or more of the same
@@ -44,6 +44,6 @@ public class DriveClimberBackwards extends CommandBase {
   @Override
   protected void interrupted() {
     System.out.println("climber backwards drive interrupt");
-    climber.driveBack(0);
+    climber.driveBothClimbAxleWheels(0);
   }
 }

@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import frc.robot.commands.*;
+import frc.robot.commands.Hab3AutoClimb.AutoToHab3;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -28,13 +29,19 @@ public class OI {
 
     Button moveArmToPos = new JoystickButton(leftDriveStick, 9);
     Button moveArmToHighestRocket = new JoystickButton(leftDriveStick, 8);
-    Button driveClimberForward = new JoystickButton(rightDriveStick, 4);
-    Button driveClimberBackwards = new JoystickButton(rightDriveStick, 5);
+    Button navXClimb             = new JoystickButton(rightDriveStick, 3);
+    Button driveFrontClimber     = new JoystickButton(rightDriveStick, 8);
+    Button driveBackClimber      = new JoystickButton(rightDriveStick, 9);
+    Button autoLimelight         = new JoystickButton(leftDriveStick, 4);
+    //Button autoNavxClimb         = new JoystickButton(rightDriveStick, 2);
 
+    navXClimb.whileHeld(new AutoNavXBalanceClimb());
     moveArmToHighestRocket.whileHeld(new MoveToHighRocket());
     moveArmToPos.whileHeld(new MoveTo47());
-    driveClimberForward.whileHeld(new DriveClimberForward());
-    driveClimberBackwards.whileHeld(new DriveClimberBackwards());
+    driveFrontClimber.toggleWhenPressed(new DriveFrontClimberX());
+    driveBackClimber.toggleWhenPressed(new DriveBackClimberX());
+    autoLimelight.whileHeld(new AutoDriveToTarget());
+    //autoNavxClimb.toggleWhenPressed(new AutoToHab3());
   }
 
   public static Joystick getRightDriveStick() {

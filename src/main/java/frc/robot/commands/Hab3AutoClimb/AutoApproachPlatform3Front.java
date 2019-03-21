@@ -5,47 +5,51 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands;
+package frc.robot.commands.Hab3AutoClimb;
 
-import edu.wpi.first.wpilibj.Joystick;
-import frc.robot.RobotMap;
+import frc.robot.commands.AutoNavXBalanceClimb;
 
-public class MoveTo47 extends CommandBase {
-
-  boolean upThere = false;
-
-  public MoveTo47() {
-    super("MoveTo47Inches");
+public class AutoApproachPlatform3Front extends AutoNavXBalanceClimb {
+  public AutoApproachPlatform3Front() {
+    // Use requires() here to declare subsystem dependencies
     requires(climber);
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    System.out.println("Move to 47 started");
-    climber.setArmPos(-9.2);
+    System.out.println("Approaching the platform while auto balancing");
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    System.out.println("m47exec");
+    double distance = climber.getFrontSensorInches();
+    System.out.println("F: " + distance);
+    if (distance > 1.1) {
+      climber.driveBothClimbAxleWheels(0.15);
+    }
+    this.balance(); // maintain balance while approaching
   }
 
-  public boolean isFinished() { // Do not worry about this method. It will be interrupted when the button is released (2)
-    return false;
+  // Make this return true when this Command no longer needs to run execute()
+  @Override
+  public boolean isFinished() {
+    return climber.getFrontSensorInches() < 1.1;
   }
 
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    climber.driveArm(0);
+    climber.driveBothClimbAxleWheels(0);
+    System.out.println("The front axle is in optimal position, ended.");
   }
 
   // Called when another command which requires one or more of the same
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
-    System.out.println("Move to 47 interrupt");
+    climber.driveBothClimbAxleWheels(0);
+    System.out.println("The front axle approach to the hab has been interrupted.");
   }
 }

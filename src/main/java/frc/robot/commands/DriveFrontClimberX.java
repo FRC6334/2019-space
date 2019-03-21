@@ -8,68 +8,46 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.OI;
-import frc.robot.RobotMap;
+import frc.robot.RobotMap.rightStick;
 
-public class ClimberDrive extends CommandBase {
+public class DriveFrontClimberX extends CommandBase {
 
-  Joystick rightStick, auxJoystick;
+  Joystick rightStick;
 
-  public ClimberDrive() {
-    super("ClimberDrive");
+  public DriveFrontClimberX() {
+    super("drivefrontclimberx");
+    // Use requires() here to declare subsystem dependencies
     requires(climber);
-    requires(grabber);
     rightStick = OI.getRightDriveStick();
-    auxJoystick = OI.getAuxStick();
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    System.out.println("climberdrive init");
+    System.out.println("front climber drive init");
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    if (auxJoystick.getRawButtonPressed(1)) {
-      grabber.toggle();
-      System.out.println("Toggle grabber");
+    if (rightStick.getRawButton(2)) {
+      if (climber.getFrontClimbEncoder() < 0.5) {
+        climber.driveFrontClimber(0.2);
+      }
+    } else {
+      climber.driveFrontClimber(0);
     }
-
+    if (climber.getBackClimbEncoder() >= -65) {
+      climber.driveBackClimber(-0.15);
+    } else {
+      climber.driveBackClimber(0);
+    }
     if (rightStick.getRawButton(4)) {
       climber.driveBothClimbAxleWheels(0.50);
     } else {
       climber.driveBothClimbAxleWheels(0);
     }
-
-    if (rightStick.getRawButtonPressed(7)) {
-      System.out.println("reset both climb encoders");
-      climber.resetBothClimbEncoders();
-    }
-
-    if (rightStick.getRawButtonPressed(6)) {
-      System.out.println("F: " + climber.getFrontSensorInches() + "\nB: " + climber.getBackSensorInches());
-    }
-
-    if (auxJoystick.getRawButtonPressed(10)) {
-      climber.resetArm();
-    }
-
-    if (Math.abs(auxJoystick.getY()) <= 0.05)
-      climber.driveArm(0);
-    else
-      climber.driveArm(auxJoystick.getY());
-
-    if (Math.abs(rightStick.getY()) <= 0.05) {
-      climber.driveClimbBoth(0);
-    } else {
-      climber.driveClimbBoth(rightStick.getY());
-    }
-
-    SmartDashboard.putNumber("Position", climber.getPosition());
-    SmartDashboard.putNumber("Velocity", climber.getVelocity());
   }
 
   // Make this return true when this Command no longer needs to run execute()
@@ -81,12 +59,17 @@ public class ClimberDrive extends CommandBase {
   // Called once after isFinished returns true
   @Override
   protected void end() {
+    System.out.println("is finished front");
+    climber.driveFrontClimber(0);
+    climber.driveBackClimber(0);
   }
 
   // Called when another command which requires one or more of the same
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
-    System.out.println("climberdrive interrupt");
+    System.out.println("front climber drive interrupt");
+    climber.driveFrontClimber(0);
+    climber.driveBackClimber(0);
   }
 }
