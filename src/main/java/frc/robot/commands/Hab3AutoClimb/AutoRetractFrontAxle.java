@@ -5,74 +5,52 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands;
+package frc.robot.commands.Hab3AutoClimb;
 
-import edu.wpi.first.wpilibj.Joystick;
-import frc.robot.OI;
-import frc.robot.RobotMap;
 import frc.robot.commands.CommandBase;
 
-public class VisionControl extends CommandBase {
-
-  Joystick rightStick = OI.getRightDriveStick();
-  Joystick auxJoystick = OI.getAuxStick();
-  int visionMode = 0;
-
-  public VisionControl() {
-    super("VisonControl");
+public class AutoRetractFrontAxle extends CommandBase {
+  public AutoRetractFrontAxle() {
+    super("retractthebackaxle");
     // Use requires() here to declare subsystem dependencies
-    requires(vision);
+    requires(climber);
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    System.out.println("Vision init");
+    System.out.println("I am retracting the front axle");
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    if (rightStick.getRawButtonPressed(RobotMap.rightStick.cycleVisionMode)) {
-      if (visionMode == 3) {
-        visionMode = 0;
-        vision.setLedMode(visionMode);
-      } else {
-        visionMode++;
-        vision.setLedMode(visionMode);
-      }
-      System.out.println("Vision mode: " + visionMode);
-    }
-    if (rightStick.getRawButtonPressed(RobotMap.rightStick.cycleCamMode)) {
-      vision.toggleCamMode();
-    }
-
-    if (auxJoystick.getRawButtonPressed(4)) {
-      vision.camLow();
-    }
-
-    if (auxJoystick.getRawButtonPressed(2)) {
-      vision.camMid();
-    }
-
-    if (auxJoystick.getRawButtonPressed(5)) {
-      vision.camHigh();
+    climber.driveFrontClimber(0.15); // Retract front axle
+    if (climber.getBackClimbEncoder() > -65) {
+      climber.driveBackClimber(-0.20); // Correct itself
+    } else {
+      climber.driveBackClimber(0); // don't keep on correcting...
     }
   }
 
   // Make this return true when this Command no longer needs to run execute()
+  @Override
   public boolean isFinished() {
-    return false;
+    return Math.ceil(climber.getFrontClimbEncoder()) == -2;
   }
 
   // Called once after isFinished returns true
   @Override
   protected void end() {
+    climber.driveClimbBoth(0);
+    System.out.println("finished retracting the front axle");
   }
 
   // Called when another command which requires one or more of the same
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
+    climber.driveClimbBoth(0);
+    System.out.println("retracting the front axle was interrupted.");
   }
 }

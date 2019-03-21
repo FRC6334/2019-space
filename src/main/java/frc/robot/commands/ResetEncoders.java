@@ -7,67 +7,34 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.Joystick;
-import frc.robot.OI;
-import frc.robot.RobotMap;
-import frc.robot.commands.CommandBase;
-
-public class VisionControl extends CommandBase {
-
-  Joystick rightStick = OI.getRightDriveStick();
-  Joystick auxJoystick = OI.getAuxStick();
-  int visionMode = 0;
-
-  public VisionControl() {
-    super("VisonControl");
+public class ResetEncoders extends CommandBase {
+  public ResetEncoders() {
+    super("resetencoders");
     // Use requires() here to declare subsystem dependencies
-    requires(vision);
+    requires(climber);
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    System.out.println("Vision init");
+    climber.resetBothClimbEncoders();
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    if (rightStick.getRawButtonPressed(RobotMap.rightStick.cycleVisionMode)) {
-      if (visionMode == 3) {
-        visionMode = 0;
-        vision.setLedMode(visionMode);
-      } else {
-        visionMode++;
-        vision.setLedMode(visionMode);
-      }
-      System.out.println("Vision mode: " + visionMode);
-    }
-    if (rightStick.getRawButtonPressed(RobotMap.rightStick.cycleCamMode)) {
-      vision.toggleCamMode();
-    }
-
-    if (auxJoystick.getRawButtonPressed(4)) {
-      vision.camLow();
-    }
-
-    if (auxJoystick.getRawButtonPressed(2)) {
-      vision.camMid();
-    }
-
-    if (auxJoystick.getRawButtonPressed(5)) {
-      vision.camHigh();
-    }
   }
 
   // Make this return true when this Command no longer needs to run execute()
+  @Override
   public boolean isFinished() {
-    return false;
+    return true;
   }
 
   // Called once after isFinished returns true
   @Override
   protected void end() {
+    System.out.println("reset encoders command");
   }
 
   // Called when another command which requires one or more of the same

@@ -7,14 +7,14 @@
 
 package frc.robot;
 
+import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.commands.AutoRoutine;
 import frc.robot.commands.CommandBase;
-import frc.robot.commands.ExampleCommand;
-import frc.robot.subsystems.ExampleSubsystem;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -24,7 +24,6 @@ import frc.robot.subsystems.ExampleSubsystem;
  * project.
  */
 public class Robot extends TimedRobot {
-  public static ExampleSubsystem m_subsystem = new ExampleSubsystem();
   public static OI m_oi;
 
   Command m_autonomousCommand;
@@ -38,12 +37,12 @@ public class Robot extends TimedRobot {
   public void robotInit() {
     System.out.println("Hi");
     CommandBase.init();
-    m_chooser.setDefaultOption("Default Auto", new ExampleCommand());
     // chooser.addOption("My Auto", new MyAutoCommand());
     SmartDashboard.putData("Auto mode", m_chooser);
+    CameraServer.getInstance().startAutomaticCapture();
   }
 
-  /**
+  /**h
    * This function is called every robot packet, no matter the mode. Use
    * this for items like diagnostics that you want ran during disabled,
    * autonomous, teleoperated and test.
@@ -82,7 +81,6 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousInit() {
-    m_autonomousCommand = m_chooser.getSelected();
 
     /*
      * String autoSelected = SmartDashboard.getString("Auto Selector",
@@ -90,11 +88,8 @@ public class Robot extends TimedRobot {
      * = new MyAutoCommand(); break; case "Default Auto": default:
      * autonomousCommand = new ExampleCommand(); break; }
      */
-
-    // schedule the autonomous command (example)
-    if (m_autonomousCommand != null) {
-      m_autonomousCommand.start();
-    }
+    System.out.println("auto init");
+    CommandBase.grabber.setForward();
   }
 
   /**
@@ -111,9 +106,7 @@ public class Robot extends TimedRobot {
     // teleop starts running. If you want the autonomous to
     // continue until interrupted by another command, remove
     // this line or comment it out.
-    if (m_autonomousCommand != null) {
-      m_autonomousCommand.cancel();
-    }
+    //CommandBase.grabber.toggle();
   }
 
   /**
@@ -122,6 +115,11 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
     Scheduler.getInstance().run();
+    SmartDashboard.putNumber("Motor #1 position", CommandBase.climber.getFrontClimbEncoder());
+    SmartDashboard.putNumber("Motor #1 velocity", CommandBase.climber.getFrontClimbVoltage());
+    SmartDashboard.putNumber("Motor #2 position", CommandBase.climber.getBackClimbEncoder());
+    SmartDashboard.putNumber("Motor #2 velocity", CommandBase.climber.getBackClimbVoltage());
+    SmartDashboard.putNumber("navx roll", CommandBase.climber.getRoll());
   }
 
   /**

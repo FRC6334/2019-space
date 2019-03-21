@@ -8,12 +8,12 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.Compressor;
-import edu.wpi.first.wpilibj.PWMTalonSRX;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.RobotMap;
-import frc.robot.commands.TankDrive;
-
+import frc.robot.commands.ArcadeDrive;
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.kauailabs.navx.frc.AHRS;
 
 /**
@@ -24,28 +24,50 @@ public class DriveTrain extends Subsystem {
   // here. Call these from Commands.
 
   AHRS navx;
-  PWMTalonSRX leftMotor1, leftMotor2, rightMotor1, rightMotor2;
+  CANSparkMax rightFront, rightBack, leftFront, leftBack;
   Compressor compressor;
 
   public DriveTrain() {
-    leftMotor1 = new PWMTalonSRX(RobotMap.leftMotor1);
-    // leftMotor2 = new TalonSRX(RobotMap.leftMotor2);
-    rightMotor1 = new PWMTalonSRX(RobotMap.rightMotor1);
-    // rightMotor2 = new TalonSRX(RobotMap.rightMotor2);
+    leftFront = new CANSparkMax(RobotMap.leftFrontMotor, MotorType.kBrushless);
+    leftBack = new CANSparkMax(RobotMap.leftBackMotor, MotorType.kBrushless);
+    rightFront = new CANSparkMax(RobotMap.rightFrontMotor, MotorType.kBrushless);
+    rightBack = new CANSparkMax(RobotMap.rightBackMotor, MotorType.kBrushless);
 
-    rightMotor1.setInverted(true);
-    //rightMotor2.setInverted(true);
+    rightBack.follow(rightFront);
+    leftBack.follow(leftFront);
 
-    //leftMotor1.setNeutralMode(NeutralMode.Brake);
-    //leftMotor2.setNeutralMode(NeutralMode.Brake);
-    //rightMotor1.setNeutralMode(NeutralMode.Brake);
-    //rightMotor2.setNeutralMode(NeutralMode.Brake);
 
-    // compressor = new Compressor(0);
-    // compressor.setClosedLoopControl(true);
+    leftFront.setInverted(true);
+    leftBack.setInverted(true);
+
+    compressor = new Compressor(RobotMap.compressor);
+    compressor.setClosedLoopControl(true);
 
     navx = new AHRS(SPI.Port.kMXP);
     navx.reset();
+  }
+
+  public void arcadeDrive(double x, double y) {
+    double right = y;
+		double left = y;
+		double turningThrottleScale;
+		
+		turningThrottleScale = Math.abs(y) * 2;
+
+		if(Math.abs(right) <= 0.05)
+			right = 0;
+		if(Math.abs(left) <= 0.05)
+			left = 0;
+		
+		if(y <= 0) {
+			right += x * turningThrottleScale;  
+			left -= x * turningThrottleScale;
+		} else {
+			right -= x * turningThrottleScale;  
+			left += x * turningThrottleScale;
+		}
+		
+		setMotorValues(left, right);
   }
 
   public void tankDrive(double leftThrottle, double rightThrottle) {
@@ -53,16 +75,16 @@ public class DriveTrain extends Subsystem {
   }
 
   private void setMotorValues(double left, double right) {
-    leftMotor1.set(left * RobotMap.speedLimiter);
-    //leftMotor2.set(ControlMode.PercentOutput, left);
-    rightMotor1.set(right * RobotMap.speedLimiter);
-   // rightMotor2.set(ControlMode.PercentOutput, right);
+    leftFront.set(left);
+    leftBack.set(left);
+    rightFront.set(right);
+    rightBack.set(right);
   }
 
   @Override
   public void initDefaultCommand() {
     System.out.println("Init drivetrain");
     // Set the default command for a subsystem here.
-    setDefaultCommand(new TankDrive());
+    setDefaultCommand(new ArcadeDrive());
   }
 }
