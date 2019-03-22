@@ -8,44 +8,56 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.Joystick;
-import frc.robot.RobotMap;
+import frc.robot.OI;
 
-public class MoveTo47 extends CommandBase {
+public class RetractFrontAxleNoAutoBalance extends CommandBase {
 
-  boolean upThere = false;
+  Joystick rightStick;
 
-  public MoveTo47() {
-    super("MoveTo47Inches");
+  public RetractFrontAxleNoAutoBalance() {
+    super("retractfrontnoauto");
+    // Use requires() here to declare subsystem dependencies
     requires(climber);
+    rightStick = OI.getRightDriveStick();
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    System.out.println("Move to 47 started");
-    climber.setArmPos(-9.2);
+    System.out.println("doing a level 2 yeehaw");
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    System.out.println("m47exec");
+    if (rightStick.getRawButton(2)) {
+      if (climber.getFrontClimbEncoder() < 0.5) {
+        climber.driveFrontClimber(0.2);
+      }
+    } else {
+      climber.driveFrontClimber(0);
+    }
+    if (rightStick.getRawButton(4)) {
+      climber.driveBothClimbAxleWheels(0.50);
+    } else {
+      climber.driveBothClimbAxleWheels(0);
+    }
   }
 
-  public boolean isFinished() { // Do not worry about this method. It will be interrupted when the button is released (2)
+  // Make this return true when this Command no longer needs to run execute()
+  @Override
+  public boolean isFinished() {
     return false;
   }
 
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    climber.driveArm(0);
   }
 
   // Called when another command which requires one or more of the same
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
-    System.out.println("Move to 47 interrupt");
   }
 }

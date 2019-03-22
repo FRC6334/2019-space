@@ -38,11 +38,12 @@ public class AutoNavXBalanceClimb extends CommandBase {
     if (Math.abs(roll) < 2)
       roll = 0;
     if (roll == 0) {
-      if (climber.getBackClimbEncoder() > -65 && climber.getFrontClimbEncoder() > -65) {
-        climber.driveClimbBoth(-0.15);
-      } else {
-        climber.driveBackClimber(0);
-      }
+      if (climber.getFrontClimbEncoder() > -65) {
+        climber.driveFrontClimber(-0.35);
+      } else climber.driveFrontClimber(0);
+      if (climber.getBackClimbEncoder() > -65) {
+        climber.driveBackClimber(-0.35);
+      } else climber.driveBackClimber(0);
     }
     ;
     if (roll > 0 && Math.ceil(climber.getFrontClimbEncoder()) >= -65) {
@@ -65,10 +66,10 @@ public class AutoNavXBalanceClimb extends CommandBase {
       }
     }
     if (rightStick.getRawButton(4)) {
-      climber.driveBothClimbAxleWheels(-0.50);
+      climber.driveBothClimbAxleWheels(0.50);
     }
     if (rightStick.getRawButton(5)) {
-      climber.driveBothClimbAxleWheels(0.50);
+      climber.driveBothClimbAxleWheels(-0.50);
     }
   }
 
@@ -81,6 +82,7 @@ public class AutoNavXBalanceClimb extends CommandBase {
   // Called once after isFinished returns true
   @Override
   protected void end() {
+    System.out.println("auto balance is done.");
     climber.driveClimbBoth(0);
     climber.driveBothClimbAxleWheels(0);
   }

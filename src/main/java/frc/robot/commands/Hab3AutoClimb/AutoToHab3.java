@@ -8,12 +8,20 @@
 package frc.robot.commands.Hab3AutoClimb;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
+import frc.robot.commands.AutoNavXBalanceClimb;
 
 public class AutoToHab3 extends CommandGroup {
   /**
    * Add your docs here.
    */
   public AutoToHab3() {
+    System.out.println("starting hab3 auto climb");
+    addSequential(new AutoNavXBalanceClimb());
+    addSequential(new AutoApproachPlatform3Front());
+    addSequential(new AutoRetractFrontAxle());
+    addSequential(new AutoApproachPlatform3Back());
+    addSequential(new AutoRetractBackAxle());
+    System.out.println("done");
     // Add Commands here:
     // e.g. addSequential(new Command1());
     // addSequential(new Command2());

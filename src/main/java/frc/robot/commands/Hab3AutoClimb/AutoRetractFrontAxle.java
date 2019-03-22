@@ -36,7 +36,7 @@ public class AutoRetractFrontAxle extends CommandBase {
   // Make this return true when this Command no longer needs to run execute()
   @Override
   public boolean isFinished() {
-    return Math.ceil(climber.getFrontClimbEncoder()) == 0;
+    return Math.ceil(climber.getFrontClimbEncoder()) == -2;
   }
 
   // Called once after isFinished returns true

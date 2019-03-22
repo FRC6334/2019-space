@@ -39,16 +39,22 @@ public class ClimberDrive extends CommandBase {
     }
 
     if (rightStick.getRawButton(4)) {
-      climber.driveBothClimbAxleWheels(0.25);
-    }
-
-    if (rightStick.getRawButton(5)) {
-      climber.driveBothClimbAxleWheels(-0.25);
+      climber.driveBothClimbAxleWheels(0.50);
+    } else {
+      climber.driveBothClimbAxleWheels(0);
     }
 
     if (rightStick.getRawButtonPressed(7)) {
       System.out.println("reset both climb encoders");
       climber.resetBothClimbEncoders();
+    }
+
+    if (rightStick.getRawButtonPressed(6)) {
+      System.out.println("F: " + climber.getFrontSensorInches() + "\nB: " + climber.getBackSensorInches());
+    }
+
+    if (auxJoystick.getRawButtonPressed(10)) {
+      climber.resetArm();
     }
 
     if (Math.abs(auxJoystick.getY()) <= 0.05)
@@ -58,11 +64,9 @@ public class ClimberDrive extends CommandBase {
 
     if (Math.abs(rightStick.getY()) <= 0.05) {
       climber.driveClimbBoth(0);
-    }else {
+    } else {
       climber.driveClimbBoth(rightStick.getY());
     }
-
-    climber.driveBothClimbAxleWheels(0);
 
     SmartDashboard.putNumber("Position", climber.getPosition());
     SmartDashboard.putNumber("Velocity", climber.getVelocity());

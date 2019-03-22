@@ -13,13 +13,15 @@ import frc.robot.RobotMap.rightStick;
 
 public class DriveBackClimberX extends CommandBase {
 
-  Joystick rightStick;
+  Joystick rightStick, arcadeStick;
 
   public DriveBackClimberX() {
     super("drivebackclimberx");
     // Use requires() here to declare subsystem dependencies
     requires(climber);
+    requires(driveTrain);
     rightStick = OI.getRightDriveStick();
+    arcadeStick = OI.getLeftDriveStick();
   }
 
   // Called just before this Command runs the first time
@@ -31,9 +33,23 @@ public class DriveBackClimberX extends CommandBase {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    if (Math.abs(rightStick.getY()) >= 0.05) {
-      climber.driveBackClimber(rightStick.getY());
-    } else climber.driveBackClimber(0);
+    if (rightStick.getRawButton(2)) {
+      if (climber.getBackClimbEncoder() < 0.5) {
+        climber.driveBackClimber(0.2);
+      }
+    } else {
+      climber.driveBackClimber(0);
+    }
+    if (rightStick.getRawButton(4)) {
+      climber.driveBothClimbAxleWheels(0.50);
+    } else {
+      climber.driveBothClimbAxleWheels(0);
+    }
+    if (Math.abs(arcadeStick.getY()) < 0.05) {
+      driveTrain.arcadeDrive(0, 0);
+    } else {
+      driveTrain.arcadeDrive(arcadeStick.getX(), arcadeStick.getY());
+    }
   }
 
   // Make this return true when this Command no longer needs to run execute()

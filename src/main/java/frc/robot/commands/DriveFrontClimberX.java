@@ -31,21 +31,21 @@ public class DriveFrontClimberX extends CommandBase {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    if (Math.abs(rightStick.getY()) >= 0.05) {
-      climber.driveFrontClimber(rightStick.getY());
-    } else climber.driveFrontClimber(0);
+    if (rightStick.getRawButton(2)) {
+      if (climber.getFrontClimbEncoder() < 0.5) {
+        climber.driveFrontClimber(0.2);
+      }
+    } else {
+      climber.driveFrontClimber(0);
+    }
     if (climber.getBackClimbEncoder() >= -65) {
       climber.driveBackClimber(-0.15);
     } else {
       climber.driveBackClimber(0);
     }
-    if (rightStick.getRawButton(5)) {
-      climber.driveBothClimbAxleWheels(-0.25);
-    }
     if (rightStick.getRawButton(4)) {
-      climber.driveBothClimbAxleWheels(0.25);
-    }
-    if (!rightStick.getRawButton(4) && !rightStick.getRawButton(5)) {
+      climber.driveBothClimbAxleWheels(0.50);
+    } else {
       climber.driveBothClimbAxleWheels(0);
     }
   }

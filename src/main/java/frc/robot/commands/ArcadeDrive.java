@@ -21,14 +21,14 @@ public class ArcadeDrive extends CommandBase {
 
   public ArcadeDrive() {
     super("ArcadeDrive");
-    System.out.println("TankDrive command init");
+    System.out.println("arcade command init");
     requires(driveTrain);
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    System.out.println("TankDrive command init 2");
+    System.out.println("arcadedrive command init 2");
     rightStick = OI.getRightDriveStick();
     leftStick = OI.getLeftDriveStick();
   }
@@ -36,6 +36,9 @@ public class ArcadeDrive extends CommandBase {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
+    if (leftStick.getRawButtonPressed(1)) {
+      grabber.toggle();
+    }
     double leftX = Math.abs(leftStick.getX()) < 0.05 ? 0 : leftStick.getX();
     double leftY = Math.abs(leftStick.getY()) < 0.05 ? 0 : leftStick.getY(); // Handle deadband
     double rightX = Math.abs(rightStick.getX()) < 0.05 ? 0 : rightStick.getX();

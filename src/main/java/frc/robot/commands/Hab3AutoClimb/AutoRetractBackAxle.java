@@ -35,7 +35,7 @@ public class AutoRetractBackAxle extends CommandBase {
       climber.driveBackClimber(0.15);
     } else {
       climber.driveBackClimber(0);
-    }
+    } 
     if (Math.abs(arcadeStick.getY()) < 0.05) {
       driveTrain.arcadeDrive(0, 0);
     } else {
@@ -46,7 +46,7 @@ public class AutoRetractBackAxle extends CommandBase {
   // Make this return true when this Command no longer needs to run execute()
   @Override
   public boolean isFinished() {
-    return Math.ceil(climber.getBackClimbEncoder()) >= 0;
+    return Math.ceil(climber.getBackClimbEncoder()) >= -2;
   }
 
   // Called once after isFinished returns true
