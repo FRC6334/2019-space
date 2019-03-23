@@ -31,10 +31,9 @@ public class Climber extends Subsystem {
   DoubleSolenoid.Value REVERSE = DoubleSolenoid.Value.kReverse;
   DoubleSolenoid.Value OFF = DoubleSolenoid.Value.kReverse;
   PWMTalonSRX backDriveLeft, backDriveRight;
-  CANSparkMax arm, front, back;
+  CANSparkMax front, back;
   AHRS navX;
-  CANEncoder armEncoder, frontClimbEncoder, backClimbEncoder;
-  CANPIDController armPID;
+  CANEncoder frontClimbEncoder, backClimbEncoder;
   Ultrasonic frontSensor, backSensor;
 
   public Climber() {
@@ -47,25 +46,11 @@ public class Climber extends Subsystem {
     front = new CANSparkMax(6, MotorType.kBrushless);
     back = new CANSparkMax(7, MotorType.kBrushless);
 
-    arm = new CANSparkMax(5, MotorType.kBrushless);
-    armEncoder = new CANEncoder(arm);
     frontClimbEncoder = new CANEncoder(front);
     backClimbEncoder = new CANEncoder(back);
-    armPID = new CANPIDController(arm);
 
     backDriveRight.setInverted(true);
     back.setInverted(true);
-
-    armPID.setP(0.25);
-    armPID.setI(0);
-    armPID.setD(0.20);
-    armPID.setIZone(0);
-    armPID.setFF(0);
-    armPID.setOutputRange(-0.25, 0.6);
-  }
-
-  public void resetArm() {
-    armEncoder.setPosition(0);
   }
 
   public void resetBothClimbEncoders() {
@@ -127,24 +112,16 @@ public class Climber extends Subsystem {
     return back.getBusVoltage();
   }
 
-  public void setArmPos(double revs) {
-    armPID.setReference(revs, ControlType.kPosition);
-  }
-
-  public double getPosition() {
-    return armEncoder.getPosition();
-  }
-
-  public double getVelocity() {
-    return armEncoder.getVelocity();
-  }
-
-  public void driveArm(double num) {
-    arm.set(num * RobotMap.speedLimiter);
-  }
-
   @Override
   public void initDefaultCommand() {
     setDefaultCommand(new ClimberDrive());
   }
+
+public double getPosition() {
+	return 0;
+}
+
+public double getVelocity() {
+	return 0;
+}
 }

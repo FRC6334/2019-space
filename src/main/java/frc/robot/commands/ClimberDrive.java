@@ -14,14 +14,12 @@ import frc.robot.RobotMap;
 
 public class ClimberDrive extends CommandBase {
 
-  Joystick rightStick, auxJoystick;
+  Joystick rightStick;
 
   public ClimberDrive() {
     super("ClimberDrive");
     requires(climber);
-    requires(grabber);
     rightStick = OI.getRightDriveStick();
-    auxJoystick = OI.getAuxStick();
   }
 
   // Called just before this Command runs the first time
@@ -33,11 +31,6 @@ public class ClimberDrive extends CommandBase {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    if (auxJoystick.getRawButtonPressed(1)) {
-      grabber.toggle();
-      System.out.println("Toggle grabber");
-    }
-
     if (rightStick.getRawButton(4)) {
       climber.driveBothClimbAxleWheels(0.50);
     } else {
@@ -52,15 +45,6 @@ public class ClimberDrive extends CommandBase {
     if (rightStick.getRawButtonPressed(6)) {
       System.out.println("F: " + climber.getFrontSensorInches() + "\nB: " + climber.getBackSensorInches());
     }
-
-    if (auxJoystick.getRawButtonPressed(10)) {
-      climber.resetArm();
-    }
-
-    if (Math.abs(auxJoystick.getY()) <= 0.05)
-      climber.driveArm(0);
-    else
-      climber.driveArm(auxJoystick.getY());
 
     if (Math.abs(rightStick.getY()) <= 0.05) {
       climber.driveClimbBoth(0);

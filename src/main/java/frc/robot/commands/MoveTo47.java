@@ -16,14 +16,14 @@ public class MoveTo47 extends CommandBase {
 
   public MoveTo47() {
     super("MoveTo47Inches");
-    requires(climber);
+    requires(arm);
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
     System.out.println("Move to 47 started");
-    climber.setArmPos(-9.2);
+    arm.setArmPos(-9.2);
   }
 
   // Called repeatedly when this Command is scheduled to run
@@ -39,7 +39,7 @@ public class MoveTo47 extends CommandBase {
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    climber.driveArm(0);
+    arm.driveArm(0);
   }
 
   // Called when another command which requires one or more of the same

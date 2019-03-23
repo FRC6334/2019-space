@@ -17,14 +17,14 @@ public class MoveToHighRocket extends CommandBase {
 
   public MoveToHighRocket() {
     super("MoveToHighRocket");
-    requires(climber);
+    requires(arm);
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
     System.out.println("Move to high rocket started");
-    climber.setArmPos(-16.8);
+    arm.setArmPos(-16.8);
   }
 
   // Called repeatedly when this Command is scheduled to run
@@ -40,7 +40,7 @@ public class MoveToHighRocket extends CommandBase {
   // Called once after isFinished returns true
   @Override
   protected void end() {
-      climber.driveArm(0);
+    arm.driveArm(0);
   }
 
   // Called when another command which requires one or more of the same
@@ -48,6 +48,6 @@ public class MoveToHighRocket extends CommandBase {
   @Override
   protected void interrupted() {
     System.out.println("Move to high rocket interrupted");
-    climber.driveArm(0);
+    arm.driveArm(0);
   }
 }
