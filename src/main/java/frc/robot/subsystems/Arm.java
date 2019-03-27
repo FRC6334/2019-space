@@ -21,16 +21,16 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 
 public class Arm extends Subsystem {
-    CANSparkMax arm;
+    CANSparkMax m_arm;
     CANEncoder armEncoder;
     CANPIDController armPID;
   
     public Arm() {
       System.out.println("Arm subsystem init");
       
-      arm = new CANSparkMax(5, MotorType.kBrushless);
-      armEncoder = new CANEncoder(arm);
-      armPID = new CANPIDController(arm);
+      m_arm = new CANSparkMax(5, MotorType.kBrushless);
+      armEncoder = new CANEncoder(m_arm);
+      armPID = new CANPIDController(m_arm);
   
       armPID.setP(0.25);
       armPID.setI(0);
@@ -49,7 +49,7 @@ public class Arm extends Subsystem {
   
     public double getVelocity() { return armEncoder.getVelocity(); }
   
-    public void driveArm(double num) { arm.set(num * RobotMap.speedLimiter); }
+    public void driveArm(double num) { m_arm.set(num * RobotMap.speedLimiter); }
   
     @Override
     public void initDefaultCommand() {

@@ -23,30 +23,30 @@ public class Grabber extends Subsystem {
   DoubleSolenoid.Value FORWARD = DoubleSolenoid.Value.kForward;
   DoubleSolenoid.Value REVERSE = DoubleSolenoid.Value.kReverse;
   DoubleSolenoid.Value OFF = DoubleSolenoid.Value.kReverse;
-  DoubleSolenoid disk;
+  DoubleSolenoid s_disk;
   // PWMTalonSRX backDriveLeft, backDriveRight;
   boolean diskExtended = false;
 
   public Grabber() {
     System.out.println("Grabber subsystem init");
-    disk = new DoubleSolenoid(RobotMap.pcm.mainPcm, 4, 5); // The disk grabber solenoid is plugged into the main pcm (ID=1), 0 being the open forward channel and 1 being the reverse
-    disk.set(REVERSE);
+    s_disk = new DoubleSolenoid(RobotMap.pcm.mainPcm, 4, 5); // The disk grabber solenoid is plugged into the main pcm (ID=1), 0 being the open forward channel and 1 being the reverse
+    s_disk.set(REVERSE);
   }
 
   public void toggle() {
     if (diskExtended) {
       System.out.println("Grabber is closing.");
-      disk.set(REVERSE);
+      s_disk.set(REVERSE);
     } else {
       System.out.println("Grabber is opening.");
-      disk.set(FORWARD);
+      s_disk.set(FORWARD);
     }
     diskExtended = !diskExtended;
   }
 
   public void setForward() {
     System.out.println("Grabber has been set forward");
-    disk.set(FORWARD);
+    s_disk.set(FORWARD);
     diskExtended = true;
   }
 

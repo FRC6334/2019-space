@@ -31,7 +31,7 @@ public class Climber extends Subsystem {
   DoubleSolenoid.Value REVERSE = DoubleSolenoid.Value.kReverse;
   DoubleSolenoid.Value OFF = DoubleSolenoid.Value.kReverse;
   PWMTalonSRX backDriveLeft, backDriveRight;
-  CANSparkMax front, back;
+  CANSparkMax m_front, m_back;
   AHRS navX;
   CANEncoder frontClimbEncoder, backClimbEncoder;
   Ultrasonic frontSensor, backSensor;
@@ -43,14 +43,14 @@ public class Climber extends Subsystem {
     backSensor = new Ultrasonic(3, 2);
     backDriveLeft = new PWMTalonSRX(8);
     backDriveRight = new PWMTalonSRX(9);
-    front = new CANSparkMax(6, MotorType.kBrushless);
-    back = new CANSparkMax(7, MotorType.kBrushless);
+    m_front = new CANSparkMax(6, MotorType.kBrushless);
+    m_back = new CANSparkMax(7, MotorType.kBrushless);
 
-    frontClimbEncoder = new CANEncoder(front);
-    backClimbEncoder = new CANEncoder(back);
+    frontClimbEncoder = new CANEncoder(m_front);
+    backClimbEncoder = new CANEncoder(m_back);
 
     backDriveRight.setInverted(true);
-    back.setInverted(true);
+    m_back.setInverted(true);
   }
 
   public void resetBothClimbEncoders() {
@@ -67,16 +67,16 @@ public class Climber extends Subsystem {
   }
 
   public void driveFrontClimber(double val) {
-    front.set(val);
+    m_front.set(val);
   }
 
   public void driveBackClimber(double val) {
-    back.set(val);
+    m_back.set(val);
   }
 
   public void driveClimbBoth(double val) {
-    front.set(val);
-    back.set(val);
+    m_front.set(val);
+    m_back.set(val);
   }
 
   public double getRoll() {
@@ -105,11 +105,11 @@ public class Climber extends Subsystem {
   }
 
   public double getFrontClimbVoltage() {
-    return front.getBusVoltage();
+    return m_front.getBusVoltage();
   }
 
   public double getBackClimbVoltage() {
-    return back.getBusVoltage();
+    return m_back.getBusVoltage();
   }
 
   @Override

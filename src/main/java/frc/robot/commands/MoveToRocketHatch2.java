@@ -8,29 +8,28 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.Joystick;
-import frc.robot.OI;
 import frc.robot.RobotMap;
 
-public class MoveToHighRocket extends CommandBase {
+public class MoveToRocketHatch2 extends CommandBase {
 
   boolean upThere = false;
 
-  public MoveToHighRocket() {
-    super("MoveToHighRocket");
+  public MoveToRocketHatch2() {
+    super("MoveToRocketHatch2");
     requires(arm);
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    System.out.println("Move to high rocket started");
-    arm.setArmPos(-16.8);
+    System.out.println("Move to 47 started");
+    arm.setArmPos(-9.2);
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    System.out.println("high rocket pid exec");
+    System.out.println("m47exec");
   }
 
   public boolean isFinished() { // Do not worry about this method. It will be interrupted when the button is released (2)
@@ -47,7 +46,6 @@ public class MoveToHighRocket extends CommandBase {
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
-    System.out.println("Move to high rocket interrupted");
-    arm.driveArm(0);
+    System.out.println("Move to 47 interrupt");
   }
 }
