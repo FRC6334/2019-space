@@ -39,8 +39,8 @@ public class AutoDriveToTarget extends CommandBase {
     double target = limelight.getEntry("tv").getDouble(0);
 
     if (target == 0) {
-      System.out.println("No target. Spinning aimlessly until I find something.");
-      driveTrain.tankDrive(0.15, -0.15);
+      System.out.println("No target.");
+      //driveTrain.tankDrive(0.15, -0.15);
     } else if (target == 1) {
       double throttle = 0.07 * limelight.getEntry("tx").getDouble(0);
       if (Math.abs(throttle) > 0.25) {
@@ -50,14 +50,15 @@ public class AutoDriveToTarget extends CommandBase {
         }
         throttle = sign * 0.25;
       }
-      System.out.println(throttle);
+      System.out.println("driving at " + throttle);
       driveTrain.tankDrive(-throttle, throttle);
     }
   }
 
   // Make this return true when this Command no longer needs to run execute()
   public boolean isFinished() {
-    return Math.abs(xOffset) <= 2 && limelight.getEntry("tv").getDouble(0) == 1;
+    return Math.abs(xOffset) <= 2 && limelight.getEntry("tv").getDouble(0) == 1; // you will have to change the offset to calculate the difference 
+    // between the limelight's crosshair and where the grabber is
   }
 
   // Called once after isFinished returns true

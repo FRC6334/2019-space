@@ -51,9 +51,6 @@ public class ClimberDrive extends CommandBase {
     } else {
       climber.driveClimbBoth(rightStick.getY());
     }
-
-    SmartDashboard.putNumber("Position", climber.getPosition());
-    SmartDashboard.putNumber("Velocity", climber.getVelocity());
   }
 
   // Make this return true when this Command no longer needs to run execute()

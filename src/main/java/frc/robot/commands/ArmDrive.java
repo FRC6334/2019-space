@@ -32,7 +32,7 @@ public class ArmDrive extends CommandBase {
             System.out.println("Toggle grabber");
         }
 
-        if (auxJoystick.getRawButtonPressed(10)) arm.resetArm();
+        if (auxJoystick.getRawButtonPressed(10)) arm.resetArmEncoder();
 
         if ( Math.abs( auxJoystick.getY() ) <= 0.05 ) {
             arm.driveArm(0);

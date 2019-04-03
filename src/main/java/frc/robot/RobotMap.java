@@ -39,14 +39,14 @@ public class RobotMap {
   public static final float speedLimiter = 0.4f; // Out of 1.0, this value represents the max speed that the robot will
                                                   // go. 0.8, for example, means 80% max motor speed
 
-  public static class rightStick {
-    public static final int cycleVisionMode = 11;
-    public static final int cycleCamMode = 10;
+  public static class rightStick { // Buttons for the right joystick (see RobotMap)
+    public static final int cycleVisionMode = 11; // led modes (blink, off, on)
+    public static final int cycleCamMode = 10; // tracking or not tracking
   }
 
   public static class encoderMath {
-    public static final double hatchTwoLow = -7.65; // Second hatch on rocket position using the arm
-    public static final double hatchTwoHigh = -8; // You know the rest
+    public static final double hatchTwoLow = -7.65; // Level 2 hatch position on the rocket - the low bound of the hole
+    public static final double hatchTwoHigh = -8; // Upper bound of level 2 rocket position
     public static final double hatchThreeLow = -14.80;
     public static final double hatchThreeHigh = -15.09;
   }
@@ -56,18 +56,18 @@ public class RobotMap {
   }
 
   public static class climber {
-    public static final int rightFrontExtend = 0;
-    public static final int rightFrontReverse = 1;
-    public static final int rightBackExtend = 2;
-    public static final int rightBackReverse = 3;
-    public static final int leftFrontExtend = 4;
-    public static final int leftFrontReverse = 5;
-    public static final int leftBackExtend = 6;
-    public static final int leftBackReverse = 7;
+    // public static final int rightFrontExtend = 0;
+    // public static final int rightFrontReverse = 1;
+    // public static final int rightBackExtend = 2;
+    // public static final int rightBackReverse = 3;
+    // public static final int leftFrontExtend = 4;
+    // public static final int leftFrontReverse = 5;
+    // public static final int leftBackExtend = 6;
+    // public static final int leftBackReverse = 7;
     public static final double speedLimiter = 0.50; // Multiply by 100 | maximum throttle
     // Buttons
-    public static final int normalDriveButton = 3;
-    public static final int turboDriveButton = 1;
+    // public static final int normalDriveButton = 3;
+    // public static final int turboDriveButton = 1;
   }
 
   public static class pcm {

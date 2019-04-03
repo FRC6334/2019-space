@@ -21,6 +21,7 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 
 public class Arm extends Subsystem {
+
     CANSparkMax m_arm;
     CANEncoder armEncoder;
     CANPIDController armPID;
@@ -38,18 +39,28 @@ public class Arm extends Subsystem {
 
       armPID.setIZone(0);
       armPID.setFF(0);
-      armPID.setOutputRange(-0.25, 0.6);
+      armPID.setOutputRange(-0.25, 0.6); // TODO: Tighten and loosen the belt enough that PID works flawlessly and nothing skips
     }
   
-    public void resetArm() { armEncoder.setPosition(0); }
+    public void resetArmEncoder() { 
+      armEncoder.setPosition(0); 
+    }
   
-    public void setArmPos(double revs) { armPID.setReference(revs, ControlType.kPosition); }
+    public void setArmPos(double revs) { 
+      armPID.setReference(revs, ControlType.kPosition); 
+    }
   
-    public double getPosition() { return armEncoder.getPosition(); }
+    public double getPosition() { 
+      return armEncoder.getPosition(); 
+    }
   
-    public double getVelocity() { return armEncoder.getVelocity(); }
+    public double getVelocity() { 
+      return armEncoder.getVelocity(); 
+    }
   
-    public void driveArm(double num) { m_arm.set(num * RobotMap.speedLimiter); }
+    public void driveArm(double num) { 
+      m_arm.set(num * RobotMap.speedLimiter); 
+    }
   
     @Override
     public void initDefaultCommand() {

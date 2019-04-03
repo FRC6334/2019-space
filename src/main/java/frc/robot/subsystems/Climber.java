@@ -116,12 +116,4 @@ public class Climber extends Subsystem {
   public void initDefaultCommand() {
     setDefaultCommand(new ClimberDrive());
   }
-
-public double getPosition() {
-	return 0;
-}
-
-public double getVelocity() {
-	return 0;
-}
 }

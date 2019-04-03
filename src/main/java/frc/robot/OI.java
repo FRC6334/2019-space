@@ -22,6 +22,7 @@ public class OI {
   static Joystick auxStick;
 
   public static void init() {
+    // Joysticks
     rightDriveStick = new Joystick(RobotMap.rightDriveStick);
     leftDriveStick = new Joystick(RobotMap.leftDriveStick);
     auxStick = new Joystick(RobotMap.auxillaryStick);
@@ -33,6 +34,7 @@ public class OI {
     Button b_driveBackClimber      = new JoystickButton(rightDriveStick, 9);
     Button b_autoLimelight         = new JoystickButton(leftDriveStick, 4);
 
+    // Buttons
     b_navXClimb.whileHeld(new AutoNavXBalanceClimb());
     b_moveArmToRocketHatch3.whileHeld(new MoveToRocketHatch3());
     b_moveArmToRocketHatch2.whileHeld(new MoveToRocketHatch2());
@@ -41,6 +43,7 @@ public class OI {
     b_autoLimelight.whileHeld(new AutoDriveToTarget());
   }
 
+  // Getters for easier global joystick object access
   public static Joystick getRightDriveStick() { 
     return rightDriveStick; 
   }
