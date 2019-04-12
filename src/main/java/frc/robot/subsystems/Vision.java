@@ -51,6 +51,16 @@ public class Vision extends Subsystem {
     }
   }
 
+  public void disableCameraTracking() {
+    driverMode = true;
+    nTable.getEntry("camMode").setDouble(1);
+  }
+
+  public void enableCameraTracking() {
+    driverMode = false;
+    nTable.getEntry("camMode").setDouble(0);
+  }
+
   public void camHigh() {
     System.out.println("high");
     cameraServo.set(0.7);
@@ -64,6 +74,16 @@ public class Vision extends Subsystem {
   public void camLow() {
     System.out.println("low");
     cameraServo.set(0.10);
+  }
+
+  public double getXOffset() {
+    tx = nTable.getEntry("tx");
+    return tx.getDouble(0);
+  }
+
+  public boolean hasTarget() {
+    tv = nTable.getEntry("tv");
+    return tv.getBoolean(false);
   }
   // Put methods for controlling this subsystem
   // here. Call these from Commands.

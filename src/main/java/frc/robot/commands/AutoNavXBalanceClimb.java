@@ -39,10 +39,10 @@ public class AutoNavXBalanceClimb extends CommandBase {
       roll = 0;
     if (roll == 0) {
       if (climber.getFrontClimbEncoder() > -65) {
-        climber.driveFrontClimber(-0.35);
+        climber.driveFrontClimber(-0.50);
       } else climber.driveFrontClimber(0);
       if (climber.getBackClimbEncoder() > -65) {
-        climber.driveBackClimber(-0.35);
+        climber.driveBackClimber(-0.50);
       } else climber.driveBackClimber(0);
     }
     ;

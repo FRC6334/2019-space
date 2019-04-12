@@ -38,6 +38,8 @@ public class AutoDriveToTarget extends CommandBase {
     xOffset = limelight.getEntry("tx").getDouble(0);
     double target = limelight.getEntry("tv").getDouble(0);
 
+    System.out.println("Target? " + (target == 1 ? "Yes" : "No") + " " + "Offset: " + xOffset);
+    
     if (target == 0) {
       System.out.println("No target. Spinning aimlessly until I find something.");
       driveTrain.tankDrive(0.15, -0.15);
@@ -52,7 +54,7 @@ public class AutoDriveToTarget extends CommandBase {
       }
       System.out.println(throttle);
       driveTrain.tankDrive(-throttle, throttle);
-    }
+    } 
   }
 
   // Make this return true when this Command no longer needs to run execute()

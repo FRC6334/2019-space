@@ -28,6 +28,7 @@ public class VisionControl extends CommandBase {
   @Override
   protected void initialize() {
     System.out.println("Vision init");
+    vision.disableCameraTracking();
   }
 
   // Called repeatedly when this Command is scheduled to run
@@ -74,5 +75,7 @@ public class VisionControl extends CommandBase {
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
+    System.out.println("Vision control interrupted. Changing to tracking mode");
+    vision.enableCameraTracking();
   }
 }

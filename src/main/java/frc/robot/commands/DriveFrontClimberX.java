@@ -38,7 +38,7 @@ public class DriveFrontClimberX extends CommandBase {
     } else {
       climber.driveFrontClimber(0);
     }
-    if (climber.getBackClimbEncoder() >= -65) {
+    if (climber.getBackClimbEncoder() >= -65) { // -27 for level 2, -65 for 3
       climber.driveBackClimber(-0.15);
     } else {
       climber.driveBackClimber(0);

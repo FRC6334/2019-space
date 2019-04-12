@@ -54,6 +54,7 @@ public class ClimberDrive extends CommandBase {
     }
 
     if (auxJoystick.getRawButtonPressed(10)) {
+      System.out.println("Reset arm encoder");
       climber.resetArm();
     }
 

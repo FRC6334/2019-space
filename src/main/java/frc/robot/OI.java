@@ -40,7 +40,7 @@ public class OI {
     moveArmToPos.whileHeld(new MoveTo47());
     driveFrontClimber.toggleWhenPressed(new DriveFrontClimberX());
     driveBackClimber.toggleWhenPressed(new DriveBackClimberX());
-    autoLimelight.whileHeld(new AutoDriveToTarget());
+    autoLimelight.whileHeld(new AutoLimelightAlign());
     //autoNavxClimb.toggleWhenPressed(new AutoToHab3());
   }
 
