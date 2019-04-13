@@ -61,11 +61,16 @@ public class Climber extends Subsystem {
     armPID.setD(0.20);
     armPID.setIZone(0);
     armPID.setFF(0);
-    armPID.setOutputRange(-0.25, 0.6);
+    armPID.setOutputRange(-0.25, 0.25);
+    navX.reset();
   }
 
   public void resetArm() {
     armEncoder.setPosition(0);
+  }
+
+  public void resetNavX() {
+    navX.reset();
   }
 
   public void resetBothClimbEncoders() {

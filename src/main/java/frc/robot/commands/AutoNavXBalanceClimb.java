@@ -35,21 +35,22 @@ public class AutoNavXBalanceClimb extends CommandBase {
 
   public void balance() {
     double roll = climber.getRoll();
-    if (Math.abs(roll) < 2)
+    System.out.println("navx climb is " + roll);
+    if (Math.abs(roll) < 3)
       roll = 0;
     if (roll == 0) {
-      if (climber.getFrontClimbEncoder() > -65) {
-        climber.driveFrontClimber(-0.50);
+      if (climber.getFrontClimbEncoder() > -70) {
+        climber.driveFrontClimber(-0.5);
       } else climber.driveFrontClimber(0);
-      if (climber.getBackClimbEncoder() > -65) {
-        climber.driveBackClimber(-0.50);
+      if (climber.getBackClimbEncoder() > -70) {
+        climber.driveBackClimber(-0.5);
       } else climber.driveBackClimber(0);
     }
     ;
-    if (roll > 0 && Math.ceil(climber.getFrontClimbEncoder()) >= -65) {
+    if (roll > 0 && Math.ceil(climber.getFrontClimbEncoder()) >= -70) {
       System.out.println("I'm leaning forwards... adjusting");
-      if (climber.getFrontClimbEncoder() > -65) {
-        climber.driveFrontClimber(-0.20);
+      if (climber.getFrontClimbEncoder() > -70) {
+        climber.driveFrontClimber(-0.3);
         climber.driveBackClimber(0);
       } else {
         climber.driveFrontClimber(0);
@@ -57,8 +58,8 @@ public class AutoNavXBalanceClimb extends CommandBase {
       }
     } else if (roll < 0) {
       System.out.println("I'm leaning backwards... adjusting");
-      if (climber.getBackClimbEncoder() > -65) {
-        climber.driveBackClimber(-0.20);
+      if (climber.getBackClimbEncoder() > -70) {
+        climber.driveBackClimber(-0.3);
         climber.driveFrontClimber(0);
       } else {
         climber.driveBackClimber(0);
@@ -76,7 +77,7 @@ public class AutoNavXBalanceClimb extends CommandBase {
   // Make this return true when this Command no longer needs to run execute()
   @Override
   public boolean isFinished() {
-    return Math.ceil(climber.getFrontClimbEncoder()) <= -65 && Math.ceil(climber.getBackClimbEncoder()) <= -65;
+    return Math.ceil(climber.getFrontClimbEncoder()) <= -70 && Math.ceil(climber.getBackClimbEncoder()) <= -70;
   }
 
   // Called once after isFinished returns true

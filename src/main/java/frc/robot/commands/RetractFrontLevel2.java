@@ -9,14 +9,13 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.Joystick;
 import frc.robot.OI;
-import frc.robot.RobotMap.rightStick;
 
-public class DriveFrontClimberX extends CommandBase {
+public class RetractFrontLevel2 extends CommandBase {
 
   Joystick rightStick;
 
-  public DriveFrontClimberX() {
-    super("drivefrontclimberx");
+  public RetractFrontLevel2() {
+    super("retractfrontfor2");
     // Use requires() here to declare subsystem dependencies
     requires(climber);
     rightStick = OI.getRightDriveStick();
@@ -25,7 +24,7 @@ public class DriveFrontClimberX extends CommandBase {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    System.out.println("front climber drive init");
+    System.out.println("climb level 2 retract front");
   }
 
   // Called repeatedly when this Command is scheduled to run
@@ -38,8 +37,8 @@ public class DriveFrontClimberX extends CommandBase {
     } else {
       climber.driveFrontClimber(0);
     }
-    if (climber.getBackClimbEncoder() >= -65) { // -27 for level 2, -65 for 3
-      climber.driveBackClimber(-0.30);
+    if (climber.getBackClimbEncoder() >= -27) { // -27 for level 2, -65 for 3
+      climber.driveBackClimber(-0.3);
     } else {
       climber.driveBackClimber(0);
     }
@@ -59,7 +58,7 @@ public class DriveFrontClimberX extends CommandBase {
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    System.out.println("is finished front");
+    System.out.println("is finished front level 2");
     climber.driveFrontClimber(0);
     climber.driveBackClimber(0);
   }
@@ -68,7 +67,7 @@ public class DriveFrontClimberX extends CommandBase {
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
-    System.out.println("front climber drive interrupt");
+    System.out.println("front climber drive interrupt level 2");
     climber.driveFrontClimber(0);
     climber.driveBackClimber(0);
   }

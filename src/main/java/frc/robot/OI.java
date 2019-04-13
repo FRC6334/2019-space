@@ -33,6 +33,7 @@ public class OI {
     Button driveFrontClimber     = new JoystickButton(rightDriveStick, 8);
     Button driveBackClimber      = new JoystickButton(rightDriveStick, 9);
     Button autoLimelight         = new JoystickButton(leftDriveStick, 4);
+    Button climbLevel2           = new JoystickButton(rightDriveStick, 5);
     //Button autoNavxClimb         = new JoystickButton(rightDriveStick, 2);
 
     navXClimb.whileHeld(new AutoNavXBalanceClimb());
@@ -41,6 +42,7 @@ public class OI {
     driveFrontClimber.toggleWhenPressed(new DriveFrontClimberX());
     driveBackClimber.toggleWhenPressed(new DriveBackClimberX());
     autoLimelight.whileHeld(new AutoLimelightAlign());
+    climbLevel2.toggleWhenPressed(new RetractFrontLevel2());
     //autoNavxClimb.toggleWhenPressed(new AutoToHab3());
   }
 

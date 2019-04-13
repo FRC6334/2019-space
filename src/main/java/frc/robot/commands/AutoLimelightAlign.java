@@ -34,7 +34,7 @@ public class AutoLimelightAlign extends CommandBase {
   protected void execute() {
     double left_command = 0;
     double right_command = 0;
-    double Kp = 0.0012f;
+    double Kp = 0.005f;
     double min_command = 0.05f;
 
     double tx = vision.getXOffset();

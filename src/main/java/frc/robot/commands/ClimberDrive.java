@@ -58,6 +58,16 @@ public class ClimberDrive extends CommandBase {
       climber.resetArm();
     }
 
+    if (auxJoystick.getRawButton(6)) {
+      System.out.println("manual climb front");
+      climber.driveFrontClimber(-0.4);
+    }
+
+    if (auxJoystick.getRawButtonPressed(7)) {
+      System.out.println("manual climb back...");
+      climber.driveBackClimber(-0.40);
+    }
+
     if (Math.abs(auxJoystick.getY()) <= 0.05)
       climber.driveArm(0);
     else
