@@ -23,13 +23,16 @@ public class Grabber extends Subsystem {
   DoubleSolenoid.Value FORWARD = DoubleSolenoid.Value.kForward;
   DoubleSolenoid.Value REVERSE = DoubleSolenoid.Value.kReverse;
   DoubleSolenoid.Value OFF = DoubleSolenoid.Value.kReverse;
-  DoubleSolenoid disk;
+  DoubleSolenoid disk, retractIntake;
   // PWMTalonSRX backDriveLeft, backDriveRight;
   boolean diskExtended = false;
+  boolean intakeExtended = false;
 
   public Grabber() {
     System.out.println("Grabber subsystem init");
     disk = new DoubleSolenoid(RobotMap.pcm.mainPcm, 4, 5); // The disk grabber solenoid is plugged into the main pcm (ID=1), 0 being the open forward channel and 1 being the reverse
+    retractIntake = new DoubleSolenoid(RobotMap.pcm.mainPcm, 6, 7);
+    retractIntake.set(REVERSE);
     disk.set(REVERSE);
   }
 
@@ -42,6 +45,29 @@ public class Grabber extends Subsystem {
       disk.set(FORWARD);
     }
     diskExtended = !diskExtended;
+  }
+
+  public void toggleIntake() {
+    if (intakeExtended) {
+      System.out.println("retracting the intake.");
+      retractIntake.set(REVERSE);
+    } else {
+      System.out.println("intake is extending now.");
+      retractIntake.set(FORWARD);
+    }
+    intakeExtended = !intakeExtended;
+  }
+
+  public void extendIntake() { // I shouldn't be logging stuff in a subsystem over a command, but at this point, whatever.
+    System.out.println("manual override, extending intake.");
+    retractIntake.set(FORWARD);
+    intakeExtended = true;
+  }
+
+  public void retractIntake() {
+    System.out.println("manual override, retracting intake");
+    retractIntake.set(REVERSE);
+    intakeExtended = false;
   }
 
   public void setForward() {

@@ -38,6 +38,11 @@ public class ClimberDrive extends CommandBase {
       System.out.println("Toggle grabber");
     }
 
+    if (rightStick.getRawButtonPressed(1)) {
+      System.out.println("toggle intake position");
+      grabber.toggleIntake();
+    }
+
     if (rightStick.getRawButton(4)) {
       climber.driveBothClimbAxleWheels(0.50);
     } else {
@@ -56,16 +61,6 @@ public class ClimberDrive extends CommandBase {
     if (auxJoystick.getRawButtonPressed(10)) {
       System.out.println("Reset arm encoder");
       climber.resetArm();
-    }
-
-    if (auxJoystick.getRawButton(6)) {
-      System.out.println("manual climb front");
-      climber.driveFrontClimber(-0.4);
-    }
-
-    if (auxJoystick.getRawButtonPressed(7)) {
-      System.out.println("manual climb back...");
-      climber.driveBackClimber(-0.40);
     }
 
     if (Math.abs(auxJoystick.getY()) <= 0.05)
